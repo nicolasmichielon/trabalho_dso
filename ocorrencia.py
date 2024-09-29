@@ -3,7 +3,7 @@ from sindico import Sindico
 from morador import Morador
 
 class Ocorrencia:
-    def __init__(self, id: int, morador:Morador, sindico: Sindico, descricao: str, tipoDeOcorrencia: TipoOcorrencia, resolvida: bool = False):
+    def __init__(self, id:int, morador:Morador, sindico: Sindico, descricao: str, tipoDeOcorrencia: TipoOcorrencia, resolvida: bool = False):
         self.__id = id
         self.__morador = morador
         self.__sindico = sindico
