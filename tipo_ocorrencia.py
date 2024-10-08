@@ -1,4 +1,4 @@
-class TipoOcorrencia:
+class TipoDeOcorrencia:
     def __init__(self, nome: str):
         self.__nome = nome
 

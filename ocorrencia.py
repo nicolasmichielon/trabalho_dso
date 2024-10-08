@@ -1,9 +1,9 @@
-from tipo_ocorrencia import TipoOcorrencia
+from tipo_ocorrencia import TipoDeOcorrencia
 from sindico import Sindico
 from morador import Morador
 
 class Ocorrencia:
-    def __init__(self, id:int, morador:Morador, sindico: Sindico, descricao: str, tipoDeOcorrencia: TipoOcorrencia, resolvida: bool = False):
+    def __init__(self, id:int, morador:Morador, sindico: Sindico, descricao: str, tipoDeOcorrencia: TipoDeOcorrencia, resolvida: bool = False):
         self.__id = id
         self.__morador = morador
         self.__sindico = sindico
@@ -14,10 +14,6 @@ class Ocorrencia:
     @property
     def tipoDeOcorrencia(self):
         return self.__tipoDeOcorrencia
-
-    @tipoDeOcorrencia.setter
-    def tipoDeOcorrencia(self, tipo):
-        self.__tipoDeOcorrencia = tipo
 
     @property
     def id(self):
@@ -42,3 +38,11 @@ class Ocorrencia:
     @resolvida.setter
     def resolvida(self, value: bool):
         self.__resolvida = value
+
+    @tipoDeOcorrencia.setter
+    def tipoDeOcorrencia(self, tipo):
+        self.__tipoDeOcorrencia = tipo
+        
+    @descricao.setter
+    def descricao(self, descricao):
+        self.__descricao = descricao
