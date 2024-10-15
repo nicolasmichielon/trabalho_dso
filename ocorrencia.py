@@ -1,15 +1,13 @@
 from tipo_ocorrencia import TipoDeOcorrencia
-from sindico import Sindico
-from morador import Morador
 
 class Ocorrencia:
-    def __init__(self, id:int, morador:Morador, sindico: Sindico, descricao: str, tipoDeOcorrencia: TipoDeOcorrencia, resolvida: bool = False):
+    def __init__(self, id:int, morador, sindico, descricao: str, tipoDeOcorrencia: str, resolvida: bool = False):
         self.__id = id
         self.__morador = morador
         self.__sindico = sindico
         self.__descricao = descricao
         self.__resolvida = resolvida
-        self.__tipoDeOcorrencia = tipoDeOcorrencia
+        self.__tipoDeOcorrencia = TipoDeOcorrencia(tipoDeOcorrencia)
 
     @property
     def tipoDeOcorrencia(self):

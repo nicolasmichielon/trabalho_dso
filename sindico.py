@@ -1,11 +1,6 @@
-class Sindico():
-    def __init__(self, nome):
-        self.__nome = nome
+from pessoa import Pessoa
 
-    @property
-    def nome(self):
-        return self.__nome
 
-    @nome.setter
-    def nome(self, nome):
-        self.__nome = nome
+class Sindico(Pessoa):
+    def __init__(self, nome: str, telefone: str, cpf: str, idade: int):
+        super().__init__(nome, telefone, cpf, idade)
