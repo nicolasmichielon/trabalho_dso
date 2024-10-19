@@ -6,12 +6,12 @@ class OcorrenciaView():
         for linha in linhas:
             print(linha)
 
-    def get_name(self):
-        return input("Nome: ")
+    def get_cpf(self):
+        return input("CPF: ")
     
-    def get_ocorrencia(self):
-        id = input("Id: ")
-        morador = input("Nome do morador: ")
+    def get_ocorrencia(self, last_id):
+        id = last_id + 1
+        cpf = input("CPF do morador: ")
         descricao = input("Descrição: ")
         tipo = input("Tipo ( 0 - agua, 1 - cachorro, 2 - gato ): ")
-        return [id, morador, descricao, tipo]
+        return [id, cpf, descricao, tipo]

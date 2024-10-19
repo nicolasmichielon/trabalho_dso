@@ -8,9 +8,9 @@ class OcorrenciaController():
         self.__ocorrencias = []
 
     def adicionar_ocorrencia(self):
-        dados = self.__ocorrencia_view.get_ocorrencia()
+        dados = self.__ocorrencia_view.get_ocorrencia(self.busca_ultimo_id())
         sindico_atual = self.__master_controller.pessoa_controller.get_sindico()
-        morador = self.__master_controller.pessoa_controller.busca_morador_por_nome(dados[1])
+        morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(dados[1])
         ocorrencia = Ocorrencia(dados[0], morador, sindico_atual, dados[2], dados[3])
         for oc in self.__ocorrencias:
             if oc.id == ocorrencia.id:
@@ -33,13 +33,24 @@ class OcorrenciaController():
                 f"Resolvida? {"Sim" if ocorrencia.resolvida else "Não"}",
                 "-------------------------------"])
 
-    def busca_ocorrencias_por_nome_de_morador(self):
-        nome = self.__ocorrencia_view.get_name()
+    def busca_ocorrencias_por_cpf_de_morador(self):
+        cpf = self.__ocorrencia_view.get_cpf()
+        if len(self.__ocorrencias) == 0:
+            self.__ocorrencia_view.mostra_ocorrencias(["Nenhuma ocorrência encontrada!"])
         for ocorrencia in self.__ocorrencias:
-            if ocorrencia.morador.nome == nome:
+            if ocorrencia.morador.cpf == cpf:
                 self.__ocorrencia_view.mostra_ocorrencias([
+                    "-------------------------------",
                     f"Ocorrência id: {ocorrencia.id}",
                     f"Morador: {ocorrencia.morador.nome}",
                     f"Sindico: {ocorrencia.sindico.nome}",
                     f"Descrição: {ocorrencia.descricao}",
-                    f"Resolvida? {"Sim" if ocorrencia.resolvida else "Não"}"])
+                    f"Resolvida? {"Sim" if ocorrencia.resolvida else "Não"}",
+                    "-------------------------------"])
+        
+                
+    def busca_ultimo_id(self) -> int:
+        if len(self.__ocorrencias) > 0:
+            return self.__ocorrencias[-1].id
+        else: 
+            return 0

@@ -27,9 +27,9 @@ class PessoaController():
             self.__moradores.remove(morador)
             self.__pessoas_view.mostrar_moradores_ou_sindico([morador])
 
-    def busca_morador_por_nome(self, nome) -> Morador:
+    def busca_morador_por_cpf(self, cpf) -> Morador:
         for morador in self.__moradores:
-            if morador.nome == nome:
+            if morador.cpf == cpf:
                 self.__pessoas_view.mostrar_moradores_ou_sindico([
                     "-------------------------------",
                     f"Nome: {morador.nome}",
