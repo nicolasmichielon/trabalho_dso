@@ -11,4 +11,4 @@ class PessoaView():
         telefone = input("Telefone: ")
         cpf = input("CPF: ")
         idade = int(input("Idade: "))
-        return [nome, telefone, cpf, idade]
+        return {"nome": nome, "telefone": telefone, "cpf": cpf, "idade": idade}

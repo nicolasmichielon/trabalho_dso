@@ -17,7 +17,7 @@ class PessoaController():
 
     def adicionar_morador(self):
         dados = self.__pessoas_view.get_pessoa()
-        morador = Morador(dados[0], dados[1], dados[2], dados[3])
+        morador = Morador(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
         if morador not in self.__moradores:
             self.__moradores.append(morador)
             self.__pessoas_view.mostrar_moradores_ou_sindico([morador])
