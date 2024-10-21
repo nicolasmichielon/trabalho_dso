@@ -46,4 +46,9 @@ class PessoaController():
         self.__pessoas_view.mostrar_moradores_ou_sindico([self.__sindico])
 
     def display_moradores(self):
-        self.__pessoas_view.mostrar_moradores_ou_sindico(self.__moradores)
+        for morador in self.__moradores:
+            self.__pessoas_view.mostrar_moradores_ou_sindico([
+                "-------------------------------",
+                f"Nome: {morador.nome}",
+                f"CPF: {morador.cpf}",
+            ])

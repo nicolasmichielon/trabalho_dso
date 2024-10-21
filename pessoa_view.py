@@ -10,5 +10,12 @@ class PessoaView():
         nome = input("Nome: ")
         telefone = input("Telefone: ")
         cpf = input("CPF: ")
-        idade = int(input("Idade: "))
-        return {"nome": nome, "telefone": telefone, "cpf": cpf, "idade": idade}
+        while True:
+            try:
+                idade = int(input("Idade: "))
+                if idade > 130 or idade < 0:
+                    raise ValueError
+                
+                return {"nome": nome, "telefone": telefone, "cpf": cpf, "idade": idade}
+            except:
+                print("Valor inválido!")
