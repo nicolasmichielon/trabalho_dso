@@ -9,13 +9,14 @@ class GastoController():
 
     def adicionar_gasto(self):
         dados = self.__gastos_view.get_gasto()
-        gasto = Gasto(dados.get("valor"), dados.get("cpf"), False, dados.get("tipo"))
+        morador = self.__master_controller.pessoa_controller.get_morador_por_cpf()
+        gasto = Gasto(dados.get("valor"), morador, False, dados.get("tipo"))
         self.__gastos.append(gasto)
 
     def listar_gasto_por_cpf(self):
-        cpf = self.__gastos_view.get_cpf()
+        cpf = self.__master_controller.pessoa_controller.get_cpf()
         for gasto in self.__gastos:
-            if gasto.cpf == cpf:
+            if gasto.morador.cpf == cpf:
                 self.__gastos_view.mostrar_gastos([
                     "---------------------",
                     f"Valor: {gasto.valor}",
@@ -27,7 +28,7 @@ class GastoController():
         for gasto in self.__gastos:
             self.__gastos_view.mostrar_gastos([
                 "---------------------",
-                f"CPF: {gasto.cpf}",
+                f"CPF: {gasto.morador.cpf}",
                 f"Valor: {gasto.valor}",
                 f"Tipo: {gasto.tipo_de_gasto}",
                 f"Pago? {"Sim" if gasto.pago else "Não"}"
@@ -36,7 +37,7 @@ class GastoController():
     def total_de_gastos_do_morador(self, cpf) -> int:
         total = 0
         for gasto in self.__gastos:
-            if gasto.cpf == cpf:
+            if gasto.morador.cpf == cpf:
                 total += gasto.valor
         self.__gastos_view.mostrar_gastos([
             "---------------------",

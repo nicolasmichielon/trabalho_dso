@@ -19,3 +19,7 @@ class PessoaView():
                 return {"nome": nome, "telefone": telefone, "cpf": cpf, "idade": idade}
             except:
                 print("Valor inválido!")
+
+    def get_cpf(self) -> str:
+        cpf = input("CPF: ")
+        return cpf

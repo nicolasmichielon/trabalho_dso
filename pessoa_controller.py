@@ -38,6 +38,15 @@ class PessoaController():
             
     def get_sindico(self) -> Sindico:
         return self.__sindico
+    
+    def get_morador_por_cpf(self) -> str:
+        cpf = self.__pessoas_view.get_cpf()
+        for morador in self.__moradores:
+            if morador.cpf == cpf:
+                return morador
+            
+    def get_cpf(self) -> str:
+        return self.__pessoas_view.get_cpf()
 
     def trocar_sindico(self, novo_sindico: Sindico):
         self.__sindico = novo_sindico
