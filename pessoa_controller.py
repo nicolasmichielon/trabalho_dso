@@ -11,7 +11,7 @@ class PessoaController():
 
     def adicionar_sindico(self):
         dados = self.__pessoas_view.get_pessoa()
-        sindico = Sindico(dados[0], dados[1], dados[2], dados[3])
+        sindico = Sindico(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
         self.__sindico = sindico
 
 
