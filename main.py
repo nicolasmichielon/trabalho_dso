@@ -12,6 +12,9 @@ while entrada != 0:
     print("5: Visualizar todos os moradores")
     print("6: Visualizar sindico")
     print("7: Visualizar todas as ocorrências")
+    print("8: Cadastrar gasto")
+    print("9: Visualizar todos os gastos")
+    print("10: Visualizar gasto por morador")
     print("===========================================")
     try:
         entrada = int(input("Escolha: "))
@@ -34,5 +37,11 @@ while entrada != 0:
         master_controller.pessoa_controller.display_sindico()
     elif entrada == 7:
         master_controller.ocorrencia_controller.busca_ocorrencias()
+    elif entrada == 8:
+        master_controller.gasto_controller.adicionar_gasto()
+    elif entrada == 9:
+        master_controller.gasto_controller.listar_gastos()
+    elif entrada == 10:
+        master_controller.gasto_controller.listar_gasto_por_cpf()
     else: 
         print("Entrada inválida!")

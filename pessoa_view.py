@@ -2,7 +2,7 @@ class PessoaView():
     def __init__(self) -> None:
         pass
 
-    def mostrar_moradores_ou_sindico(self, linhas: str):
+    def mostrar_moradores_ou_sindico(self, linhas: list):
         for linha in linhas:
             print(linha)
 

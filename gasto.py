@@ -3,9 +3,9 @@ from tipo_de_gasto import TipoDeGasto
 
 
 class Gasto():
-    def __init__(self, valor:float, morador:Morador, pago:bool, tipo_de_gasto:TipoDeGasto):
+    def __init__(self, valor:float, cpf:str, pago:bool, tipo_de_gasto:TipoDeGasto):
         self.__valor = valor
-        self.__morador = morador
+        self.__cpf = cpf
         self.__pago = pago
         self.__tipo_de_gasto = tipo_de_gasto
 
@@ -26,12 +26,12 @@ class Gasto():
         self.__valor = valor
 
     @property
-    def morador(self):
-        return self.__morador
+    def cpf(self):
+        return self.__cpf
 
-    @morador.setter
-    def morador(self, morador: Morador):
-        self.__morador = morador
+    @cpf.setter
+    def cpf(self, cpf: str):
+        self.__cpf = cpf
 
     @property
     def pago(self):
