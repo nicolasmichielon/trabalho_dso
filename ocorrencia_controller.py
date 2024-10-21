@@ -10,13 +10,15 @@ class OcorrenciaController():
     def adicionar_ocorrencia(self):
         dados = self.__ocorrencia_view.get_ocorrencia(self.busca_ultimo_id())
         sindico_atual = self.__master_controller.pessoa_controller.get_sindico()
-        morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(dados[1])
-        ocorrencia = Ocorrencia(dados[0], morador, sindico_atual, dados[2], dados[3])
+        morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(dados.get("cpf"))        
+        try:
+            ocorrencia = Ocorrencia(dados.get("id"), morador, sindico_atual, dados.get("descricao"), dados.get("tipo"))
+        except:
+            raise ValueError("Dados inválidos foram inseridos")
         for oc in self.__ocorrencias:
             if oc.id == ocorrencia.id:
                 return
         self.__ocorrencias.append(ocorrencia)
-
 
     def remover_ocorrencia(self, ocorrencia):
         if ocorrencia in self.__ocorrencias:
@@ -35,6 +37,8 @@ class OcorrenciaController():
 
     def busca_ocorrencias_por_cpf_de_morador(self):
         cpf = self.__ocorrencia_view.get_cpf()
+        if not isinstance(cpf, int):
+            raise ValueError("CPF deve ser inteiro")
         if len(self.__ocorrencias) == 0:
             self.__ocorrencia_view.mostra_ocorrencias(["Nenhuma ocorrência encontrada!"])
         for ocorrencia in self.__ocorrencias:

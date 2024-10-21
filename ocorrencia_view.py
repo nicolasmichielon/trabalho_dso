@@ -14,4 +14,4 @@ class OcorrenciaView():
         cpf = input("CPF do morador: ")
         descricao = input("Descrição: ")
         tipo = input("Tipo ( 0 - agua, 1 - cachorro, 2 - gato ): ")
-        return [id, cpf, descricao, tipo]
+        return {id: id, cpf: cpf, descricao:descricao, tipo:tipo}
