@@ -1,4 +1,4 @@
-from master_controller import MasterController
+from controllers.master_controller import MasterController
 
 master_controller = MasterController()
 

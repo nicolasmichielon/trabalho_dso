@@ -1,7 +1,7 @@
 
-from ocorrencia_controller import OcorrenciaController
-from pessoa_controller import PessoaController
-from gasto_controller import GastoController
+from controllers.ocorrencia_controller import OcorrenciaController
+from controllers.pessoa_controller import PessoaController
+from controllers.gasto_controller import GastoController
 
 
 class MasterController():

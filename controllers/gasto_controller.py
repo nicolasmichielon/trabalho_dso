@@ -1,5 +1,5 @@
-from gasto import Gasto
-from gasto_view import GastoView
+from models.gasto import Gasto
+from views.gasto_view import GastoView
 
 class GastoController():
     def __init__(self, master_controller) -> None:

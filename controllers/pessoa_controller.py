@@ -1,5 +1,5 @@
 from morador import Morador
-from pessoa_view import PessoaView
+from views.pessoa_view import PessoaView
 from sindico import Sindico
 
 class PessoaController():

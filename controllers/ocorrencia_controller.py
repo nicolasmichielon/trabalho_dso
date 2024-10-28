@@ -1,5 +1,5 @@
-from ocorrencia_view import OcorrenciaView
-from ocorrencia import Ocorrencia
+from views.ocorrencia_view import OcorrenciaView
+from models.ocorrencia import Ocorrencia
 
 class OcorrenciaController():
     def __init__(self, master_controller):
