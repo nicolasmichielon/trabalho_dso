@@ -1,6 +1,7 @@
 from morador import Morador
 from views.pessoa_view import PessoaView
 from sindico import Sindico
+from exceptions.morador_repetido_exception import MoradorRepetidoException
 
 class PessoaController():
     def __init__(self, master_controller):
@@ -22,11 +23,14 @@ class PessoaController():
         try:
             dados = self.__pessoas_view.get_pessoa()
             morador = Morador(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
-        except:
-            raise ValueError("Dados inválidos foram inseridos ou o morador não existe")
-        if morador not in self.__moradores:
-            self.__moradores.append(morador)
-            self.__pessoas_view.mostrar_moradores_ou_sindico([morador])
+            cpfs = [morador.cpf for morador in self.__moradores]
+            if morador.cpf not in cpfs:
+                self.__moradores.append(morador)
+                self.__pessoas_view.mostrar_moradores_ou_sindico([morador])
+            else:
+                raise MoradorRepetidoException(morador.cpf)
+        except MoradorRepetidoException as e:
+            self.__pessoas_view.morador_repetido(e)
 
     def remover_morador(self):
         try:

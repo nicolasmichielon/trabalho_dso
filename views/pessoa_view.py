@@ -48,3 +48,6 @@ class PessoaView():
     def get_cpf(self) -> str:
         cpf = input("CPF: ")
         return cpf
+
+    def morador_repetido(self, msg):
+        print(msg)
