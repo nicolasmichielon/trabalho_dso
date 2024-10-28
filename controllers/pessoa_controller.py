@@ -10,19 +10,29 @@ class PessoaController():
         self.__sindico = None
 
     def adicionar_sindico(self):
-        dados = self.__pessoas_view.get_pessoa()
-        sindico = Sindico(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
+        try:
+            dados = self.__pessoas_view.get_pessoa()
+            sindico = Sindico(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
+        except:
+            raise ValueError("Dados inválidos foram inseridos")
         self.__sindico = sindico
 
 
     def adicionar_morador(self):
-        dados = self.__pessoas_view.get_pessoa()
-        morador = Morador(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
+        try:
+            dados = self.__pessoas_view.get_pessoa()
+            morador = Morador(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
+        except:
+            raise ValueError("Dados inválidos foram inseridos ou o morador não existe")
         if morador not in self.__moradores:
             self.__moradores.append(morador)
             self.__pessoas_view.mostrar_moradores_ou_sindico([morador])
 
-    def remover_morador(self, morador: Morador):
+    def remover_morador(self):
+        try:
+            morador = self.__pessoas_view.get_pessoa()
+        except:
+            raise ValueError("Dados inválidos foram inseridos ou o morador não existe")
         if morador in self.__moradores:
             self.__moradores.remove(morador)
             self.__pessoas_view.mostrar_moradores_ou_sindico([morador])
