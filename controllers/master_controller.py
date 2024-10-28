@@ -2,6 +2,7 @@
 from controllers.ocorrencia_controller import OcorrenciaController
 from controllers.pessoa_controller import PessoaController
 from controllers.gasto_controller import GastoController
+from controllers.estacionamento_controller import EstacionamentoController
 
 
 class MasterController():
@@ -9,6 +10,7 @@ class MasterController():
         self.__ocorrencia_controller = OcorrenciaController(self)
         self.__pessoa_controller = PessoaController(self)
         self.__gasto_controller = GastoController(self)
+        self.__estacionamento_controller = EstacionamentoController(self)
 
     @property
     def ocorrencia_controller(self):
@@ -33,3 +35,11 @@ class MasterController():
     @gasto_controller.setter
     def gasto_controller(self, ga_co):
         self.gasto_controller = ga_co
+
+    @property
+    def estacionamento_controller(self):
+        return self.__estacionamento_controller
+    
+    @estacionamento_controller.setter
+    def estacionamento_controller(self, es_co):
+        self.estacionamento_controller = es_co

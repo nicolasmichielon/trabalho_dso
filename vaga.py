@@ -1,25 +1,8 @@
-
-from tipo_de_vaga import TipoDeVaga
-
 class Vaga:
-    def __init__(self, numero: int, tipo_de_vaga: TipoDeVaga, ocupado: bool=False):
+    def __init__(self, numero: int, vaga_de_morador: bool, ocupado: bool=False):
         self.__numero = numero
         self.__ocupado = ocupado
-        self.__tipo_de_vaga = tipo_de_vaga
-
-    @property
-    def tipo_de_vaga(self):
-        return self.__tipo_de_vaga
-
-    @tipo_de_vaga.setter
-    def tipo_de_vaga(self, value):
-        self.__tipo_de_vaga = value
-        
-    def ocupar(self):
-        self.__ocupado = True
-
-    def desocupar(self):
-        self.__ocupado = False
+        self.__vaga_de_morador = vaga_de_morador
 
     @property
     def numero(self):
@@ -28,6 +11,14 @@ class Vaga:
     @numero.setter
     def numero(self, value):
         self.__numero = value
+
+    @property
+    def vaga_de_morador(self):
+        return self.__vaga_de_morador
+
+    @vaga_de_morador.setter
+    def vaga_de_morador(self, value):
+        self.__vaga_de_morador = value
 
     @property
     def ocupado(self):
