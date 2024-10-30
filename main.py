@@ -17,6 +17,7 @@ while entrada != 0:
     print("10: Visualizar gasto por morador")
     print("11: Visualizar estacionamento")
     print("12: Ocupar vaga")
+    print("13: Desocupar vaga")
     print("===========================================")
     try:
         entrada = int(input("Escolha: "))
@@ -49,5 +50,7 @@ while entrada != 0:
         master_controller.estacionamento_controller.display_vagas()
     elif entrada == 12:
         master_controller.estacionamento_controller.ocupar_vaga()
+    elif entrada == 13:
+        master_controller.estacionamento_controller.desocupar_vaga()
     else: 
         print("Entrada inválida!")

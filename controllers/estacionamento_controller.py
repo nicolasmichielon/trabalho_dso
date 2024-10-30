@@ -11,30 +11,58 @@ class EstacionamentoController():
     def display_vagas(self):
             numeros = []
             estado = []
+            linhas = []
+            linhaNum = ""
+            linhaEst = ""
             for vaga in self.__vagas:
-                numeros.append(f"{vaga.numero}   ")
-                if vaga.ocupado:
-                    estado.append("O   ")
+                if vaga.vaga_de_morador:
+                    morador = "M"
                 else:
-                    estado.append("-   ")
+                    morador = "V"
 
-            linhas_numeros = []
-            linhas_estado = []
-            for i in range(0, len(numeros), 3):
-                linhas_numeros.append("".join(numeros[i:i+3]).strip())
-                linhas_estado.append("".join(estado[i:i+3]).strip())
+                if vaga.numero < 10:
+                    linhaNum += f" {vaga.numero} {morador}  "
+                else:
+                    linhaNum += f"{vaga.numero} {morador}  "
 
-            linhas = [f"{num}\n{est}" for num, est in zip(linhas_numeros, linhas_estado)]
+                if vaga.ocupado:
+                    linhaEst += f"  O   "
+                else:
+                    linhaEst += f"  -   "
+
+                if vaga.numero % 3 == 0:
+                    linhas.append(linhaNum)
+                    linhas.append(linhaEst)
+                    linhaNum = ""
+                    linhaEst = ""
+
             self.__estacionamento_view.mostrar_vagas(linhas)
 
     def ocupar_vaga(self):
-        num_vaga = self.__estacionamento_view.get_vaga()
-        print(num_vaga)
-        for v in self.__vagas:
-            print(v.numero)
-            print(v.vaga_de_morador)
-            print(v.ocupado)
-            if v.numero == num_vaga:
-                v.ocupado = True
-                print("nicholas")
-            print(v.ocupado)
+        try:    
+            num_vaga = self.__estacionamento_view.get_vaga()
+            for v in self.__vagas:
+                if v.numero == num_vaga:
+                    if v.ocupado:
+                        raise ValueError
+                    else:
+                        v.ocupado = True
+                        print("Vaga ocupada")
+                        return
+        except ValueError:
+            print("Esta vaga ja esta ocupada")
+
+    def desocupar_vaga(self):
+        try:    
+            num_vaga = self.__estacionamento_view.get_vaga()
+            for v in self.__vagas:
+                if v.numero == num_vaga:
+                    if v.ocupado:
+                        v.ocupado = False
+                        print("Vaga desocupada")
+                        return
+                    else:
+                        raise ValueError
+        except ValueError:
+            print("Esta vaga nao esta ocupada")
+
