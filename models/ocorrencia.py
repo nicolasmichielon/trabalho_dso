@@ -1,6 +1,6 @@
 from tipo_ocorrencia import TipoDeOcorrencia
-from morador import Morador
-from sindico import Sindico
+from models.morador import Morador
+from models.sindico import Sindico
 
 class Ocorrencia:
     def __init__(self, id:int, morador: Morador, sindico: Sindico, descricao: str, tipoDeOcorrencia: str, resolvida: bool = False):

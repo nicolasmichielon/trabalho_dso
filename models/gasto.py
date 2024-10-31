@@ -1,4 +1,4 @@
-from morador import Morador
+from models.morador import Morador
 from tipo_de_gasto import TipoDeGasto
 
 

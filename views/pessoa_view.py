@@ -2,7 +2,7 @@ class PessoaView():
     def __init__(self) -> None:
         pass
 
-    def mostrar_moradores_ou_sindico(self, linhas: list):
+    def mostrar_pessoa(self, linhas: list):
         for linha in linhas:
             print(linha)
 
@@ -49,5 +49,5 @@ class PessoaView():
         cpf = input("CPF: ")
         return cpf
 
-    def morador_repetido(self, msg):
+    def pessoa_repetida(self, msg):
         print(msg)

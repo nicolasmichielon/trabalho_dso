@@ -7,10 +7,12 @@ while entrada != 0:
     print("================== MENU ==================")
     print("1: Adicionar Morador")
     print("2: Adicionar Sindico")
+    print("15: Adicionar Visitante")
     print("3: Criar Ocorrencia")
     print("4: Buscar Ocorrencia por CPF de morador")
     print("5: Visualizar todos os moradores")
     print("6: Visualizar sindico")
+    print("16: Visualizar todos os visitantes")
     print("7: Visualizar todas as ocorrências")
     print("8: Cadastrar gasto")
     print("9: Visualizar todos os gastos")
@@ -31,6 +33,8 @@ while entrada != 0:
         master_controller.pessoa_controller.adicionar_morador()
     elif entrada == 2:
         master_controller.pessoa_controller.adicionar_sindico()
+    elif entrada == 15:
+        master_controller.pessoa_controller.adicionar_visitante()
     elif entrada == 3:
         master_controller.ocorrencia_controller.adicionar_ocorrencia()
     elif entrada == 4:
@@ -39,6 +43,8 @@ while entrada != 0:
         master_controller.pessoa_controller.display_moradores()
     elif entrada == 6:
         master_controller.pessoa_controller.display_sindico()
+    elif entrada == 16:
+        master_controller.pessoa_controller.display_visitantes()
     elif entrada == 7:
         master_controller.ocorrencia_controller.busca_ocorrencias()
     elif entrada == 8:
