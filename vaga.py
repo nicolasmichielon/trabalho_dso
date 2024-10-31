@@ -1,6 +1,7 @@
 class Vaga:
-    def __init__(self, numero: int, vaga_de_morador: bool, ocupado: bool=False):
+    def __init__(self, numero: int, pessoa: str, vaga_de_morador: bool, ocupado: bool=False):
         self.__numero = numero
+        self.__pessoa = pessoa
         self.__ocupado = ocupado
         self.__vaga_de_morador = vaga_de_morador
 
@@ -11,6 +12,14 @@ class Vaga:
     @numero.setter
     def numero(self, value):
         self.__numero = value
+
+    @property
+    def pessoa(self):
+        return self.__pessoa
+
+    @pessoa.setter
+    def pessoa(self, value):
+        self.__pessoa = value
 
     @property
     def vaga_de_morador(self):

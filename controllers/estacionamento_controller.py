@@ -39,7 +39,8 @@ class EstacionamentoController():
             self.__estacionamento_view.mostrar_vagas(linhas)
 
     def ocupar_vaga(self):
-        try:    
+        try:
+            cpf_pessoa = self.__estacionamento_view.get_cpf()
             num_vaga = self.__estacionamento_view.get_vaga()
             for v in self.__vagas:
                 if v.numero == num_vaga:
@@ -47,16 +48,18 @@ class EstacionamentoController():
                         raise ValueError
                     else:
                         v.ocupado = True
+                        v.pessoa = cpf_pessoa
                         print("Vaga ocupada")
                         return
         except ValueError:
             print("Esta vaga ja esta ocupada")
 
     def desocupar_vaga(self):
-        try:    
+        try:
+            cpf_pessoa = self.__estacionamento_view.get_cpf()
             num_vaga = self.__estacionamento_view.get_vaga()
             for v in self.__vagas:
-                if v.numero == num_vaga:
+                if v.numero == num_vaga and cpf_pessoa == v.pessoa:
                     if v.ocupado:
                         v.ocupado = False
                         print("Vaga desocupada")
@@ -66,3 +69,28 @@ class EstacionamentoController():
         except ValueError:
             print("Esta vaga nao esta ocupada")
 
+    def display_vaga(self):
+        try:
+            num_vaga = self.__estacionamento_view.get_vaga()
+            for v in self.__vagas:
+                if v.numero == num_vaga:                    
+                    if v.vaga_de_morador:
+                        tipo = "Morador" 
+                    else:
+                        tipo = "Visitante"
+
+                    if v.ocupado:
+                        pessoa = self.__master_controller.pessoa_controller.busca_morador_por_cpf(v.pessoa)
+                        pessoa = pessoa.nome
+                    else:
+                        pessoa = "Ninguem"
+                    self.__estacionamento_view.mostrar_vagas([
+                        "------------------------------------",
+                        f"Vaga {v.numero}",
+                        f"Ocupado: {v.ocupado}",
+                        f"Vaga de {tipo}",
+                        f"Ocupado por {pessoa}",
+                        "-------------------------------------"
+                    ])
+        except:
+            print("Essa vaga nao existe")
