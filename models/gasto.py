@@ -1,5 +1,5 @@
 from models.morador import Morador
-from tipo_de_gasto import TipoDeGasto
+from models.tipo_de_gasto import TipoDeGasto
 
 
 class Gasto():

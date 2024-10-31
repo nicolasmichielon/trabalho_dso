@@ -1,4 +1,4 @@
-from vaga import Vaga
+from models.vaga import Vaga
 
 class Estacionamento:
     def __init__(self, qtd_vagas_morador: int, qtd_vagas_visitante: int):

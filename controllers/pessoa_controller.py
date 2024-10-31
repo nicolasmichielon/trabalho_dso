@@ -29,7 +29,7 @@ class PessoaController():
             cpfs = [morador.cpf for morador in self.__moradores]
             if morador.cpf not in cpfs:
                 self.__moradores.append(morador)
-                self.__pessoas_view.mostrar_moradores_ou_sindico([morador])
+                self.__pessoas_view.mostrar_pessoa([morador])
             else:
                 raise MoradorRepetidoException(morador.cpf)
         except MoradorRepetidoException as e:

@@ -80,7 +80,7 @@ class EstacionamentoController():
                         tipo = "Visitante"
 
                     if v.ocupado:
-                        pessoa = self.__master_controller.pessoa_controller.busca_morador_por_cpf(v.pessoa)
+                        pessoa = self.__master_controller.pessoa_controller.busca_morador_por_cpf(int(v.pessoa))
                         pessoa = pessoa.nome
                     else:
                         pessoa = "Ninguem"
