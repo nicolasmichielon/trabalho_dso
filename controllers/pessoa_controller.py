@@ -76,9 +76,11 @@ class PessoaController():
                     f"Nome: {morador.nome}",
                     "-------------------------------"])
                 return morador
-        return f"CPF nao encontrado"
+        print("CPF nao encontrado")
+        return None
 
     def busca_visitante_por_cpf(self, cpf) -> Visitante:
+        print(f"Procurando pelo CPF: {cpf}...")
         for visitante in self.__visitantes:
             if visitante.cpf == cpf:
                 self.__pessoas_view.mostrar_pessoa([
@@ -86,21 +88,32 @@ class PessoaController():
                     f"Nome: {visitante.nome}",
                     "-------------------------------"])
                 return visitante
+        print("CPF nao encontrado")
+        return None
             
     def get_sindico(self) -> Sindico:
         return self.__sindico
-    
-    def get_morador_por_cpf(self) -> str:
-        cpf = self.__pessoas_view.get_cpf()
-        for morador in self.__moradores:
-            if morador.cpf == cpf:
-                return morador
-    
-    def get_visitante_por_cpf(self) -> str:
-        cpf = self.__pessoas_view.get_cpf()
-        for visitante in self.__visitantes:
-            if visitante.cpf == cpf:
-                return visitante
+
+   # def busca_pessoa_por_cpf(self, cpf: int):
+   #     if cpf == self.__sindico.cpf:
+   #        return self.__sindico
+   #     else:
+   #         for v in self.__visitantes:
+   #             if v.cpf == cpf:
+   #                 return v
+   #         for m in self.__moradores:
+   #             if m.cpf == cpf:
+   #                 return m
+   #     return f"Pessoa nao encontrada no sistema..."
+
+    def get_tipo_de_pessoa(self, cpf: int) -> str:
+        if self.busca_morador_por_cpf(cpf):
+            return f"Morador"
+        elif self.busca_visitante_por_cpf(cpf):
+            return f"Visitante"
+        else:
+            return f"Sindico"
+
             
     def get_cpf(self) -> str:
         return self.__pessoas_view.get_cpf()
