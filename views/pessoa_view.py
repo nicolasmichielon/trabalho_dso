@@ -30,6 +30,7 @@ class PessoaView():
                 cpf = input("CPF: ")
                 if len(cpf) != 11 or not cpf.isdigit():
                     raise ValueError
+                cpf = int(cpf)
                 break
             except ValueError:
                 print("CPF inválido! Deve conter 11 dígitos numéricos.")

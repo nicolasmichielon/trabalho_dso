@@ -68,6 +68,7 @@ class PessoaController():
             self.__pessoas_view.mostrar_pessoa([visitante])
 
     def busca_morador_por_cpf(self, cpf) -> Morador:
+        print(f"Procurando pelo CPF: {cpf}...")
         for morador in self.__moradores:
             if morador.cpf == cpf:
                 self.__pessoas_view.mostrar_pessoa([
@@ -75,6 +76,7 @@ class PessoaController():
                     f"Nome: {morador.nome}",
                     "-------------------------------"])
                 return morador
+        return f"CPF nao encontrado"
 
     def busca_visitante_por_cpf(self, cpf) -> Visitante:
         for visitante in self.__visitantes:

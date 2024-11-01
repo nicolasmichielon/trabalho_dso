@@ -9,34 +9,34 @@ class EstacionamentoController():
         self.__estacionamento_view = EstacionamentoView()
 
     def display_vagas(self):
-            numeros = []
-            estado = []
-            linhas = []
-            linhaNum = ""
-            linhaEst = ""
-            for vaga in self.__vagas:
-                if vaga.vaga_de_morador:
-                    morador = "M"
-                else:
-                    morador = "V"
+        numeros = []
+        estado = []
+        linhas = []
+        linhaNum = ""
+        linhaEst = ""
+        for vaga in self.__vagas:
+            if vaga.vaga_de_morador:
+                morador = "M"
+            else:
+                morador = "V"
 
-                if vaga.numero < 10:
-                    linhaNum += f" {vaga.numero} {morador}  "
-                else:
-                    linhaNum += f"{vaga.numero} {morador}  "
+            if vaga.numero < 10:
+                linhaNum += f" {vaga.numero} {morador}  "
+            else:
+                linhaNum += f"{vaga.numero} {morador}  "
 
-                if vaga.ocupado:
-                    linhaEst += f"  O   "
-                else:
-                    linhaEst += f"  -   "
+            if vaga.ocupado:
+                linhaEst += f"  O   "
+            else:
+                linhaEst += f"  -   "
 
-                if vaga.numero % 3 == 0:
-                    linhas.append(linhaNum)
-                    linhas.append(linhaEst)
-                    linhaNum = ""
-                    linhaEst = ""
+            if vaga.numero % 3 == 0:
+                linhas.append(linhaNum)
+                linhas.append(linhaEst)
+                linhaNum = ""
+                linhaEst = ""
 
-            self.__estacionamento_view.mostrar_vagas(linhas)
+        self.__estacionamento_view.mostrar_vagas(linhas)
 
     def ocupar_vaga(self):
         try:
@@ -66,6 +66,7 @@ class EstacionamentoController():
                         return
                     else:
                         raise ValueError
+            raise ValueError
         except ValueError:
             print("Esta vaga nao esta ocupada")
 
@@ -78,7 +79,6 @@ class EstacionamentoController():
                         tipo = "Morador" 
                     else:
                         tipo = "Visitante"
-
                     if v.ocupado:
                         pessoa = self.__master_controller.pessoa_controller.busca_morador_por_cpf(int(v.pessoa))
                         pessoa = pessoa.nome
