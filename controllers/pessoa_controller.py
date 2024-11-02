@@ -2,8 +2,7 @@ from views.pessoa_view import PessoaView
 from models.morador import Morador
 from models.sindico import Sindico
 from models.visitante import Visitante
-from exceptions.morador_repetido_exception import MoradorRepetidoException
-from exceptions.visitante_repetido_exception import VisitanteRepetidoException
+from exceptions.pessoa_repetida_exception import PessoaRepetidaException
 
 class PessoaController():
     def __init__(self, master_controller):
@@ -26,13 +25,17 @@ class PessoaController():
         try:
             dados = self.__pessoas_view.get_pessoa()
             morador = Morador(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
-            cpfs = [morador.cpf for morador in self.__moradores]
+            cpfs = []
+            for morador in self.__moradores:
+                cpfs.append(morador.cpf)
+            for visitante in self.__visitantes:
+                cpfs.append(visitante.cpf)
             if morador.cpf not in cpfs:
                 self.__moradores.append(morador)
                 self.__pessoas_view.mostrar_pessoa([morador])
             else:
-                raise MoradorRepetidoException(morador.cpf)
-        except MoradorRepetidoException as e:
+                raise PessoaRepetidaException(morador.cpf)
+        except PessoaRepetidaException as e:
             self.__pessoas_view.pessoa_repetida(e)
 
 
@@ -40,13 +43,17 @@ class PessoaController():
         try:
             dados = self.__pessoas_view.get_pessoa()
             visitante = Visitante(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
-            cpfs = [visitante.cpf for visitante in self.__visitantes]
+            cpfs = []
+            for morador in self.__moradores:
+                cpfs.append(morador.cpf)
+            for visitante in self.__visitantes:
+                cpfs.append(visitante.cpf)
             if visitante.cpf not in cpfs:
                 self.__visitantes.append(visitante)
                 self.__pessoas_view.mostrar_pessoa([visitante])
             else:
-                raise VisitanteRepetidoException(visitante.cpf)
-        except VisitanteRepetidoException as e:
+                raise PessoaRepetidaException(visitante.cpf)
+        except PessoaRepetidaException as e:
             self.__pessoas_view.pessoa_repetida(e)
 
     def remover_morador(self):
