@@ -1,6 +1,6 @@
-from visitante import Visitante
-from morador import Morador
-from sindico import Sindico
+from models.visitante import Visitante
+from models.morador import Morador
+from models.sindico import Sindico
 
 class Condominio():
     def __init__(self, id: int, endereco: str, nome: str):
