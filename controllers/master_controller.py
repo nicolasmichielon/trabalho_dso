@@ -22,6 +22,7 @@ class MasterController():
         print("2: Entrar no Menu de Ocorrencias")
         print("3: Entrar no Menu do Estacionamento")
         print("4: Entrar no Menu de Gastos")
+        print("5: Entrar no Menu de Reservas")
         print("===========================================")
         try:
             entrada = int(input("Escolha: "))
@@ -46,6 +47,10 @@ class MasterController():
             switch = self.menuGasto()
             while switch:
                 switch = self.menuGasto()
+        elif entrada == 5:
+            switch = self.menuReserva()
+            while switch:
+                switch = self.menuReserva()
         else: 
             print("Entrada inválida!")
         return True
@@ -142,12 +147,34 @@ class MasterController():
             return True
         if entrada == 0:
             return False
-        elif entrada == 8:
+        elif entrada == 1:
             self.__gasto_controller.adicionar_gasto()
-        elif entrada == 9:
+        elif entrada == 2:
             self.__gasto_controller.listar_gastos()
-        elif entrada == 10:
+        elif entrada == 3:
             self.__gasto_controller.listar_gasto_por_cpf()
+        return True
+    
+    def menuReserva(self):
+        entrada = None
+        print("================== MENU DE RESERVAS ==================")
+        print("0: Retornar ao Menu Princial")
+        print("1: Cadastrar reserva")
+        print("2: Visualizar todas as reservas")
+        print("3: Visualizar reserva por morador")
+        try:
+            entrada = int(input("Escolha: "))
+        except:
+            print("Entrada inválida!")
+            return True
+        if entrada == 0:
+            return False
+        elif entrada == 1:
+            self.__reserva_controller.adicionar_reserva()
+        elif entrada == 2:
+            self.__reserva_controller.lista_reservas()
+        elif entrada == 3:
+            self.__reserva_controller.lista_reservas_por_cpf()
         return True
 
 

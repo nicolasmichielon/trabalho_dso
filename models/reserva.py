@@ -2,20 +2,20 @@ from models.espaco import Espaco
 from models.gasto import Gasto
 from models.morador import Morador
 
-class ReservaDeEspaco:
-    def __init__(self, id_reserva: int, solicitante: Morador, data_reserva, hora_inicio, hora_fim, espaco: Espaco):
-        self.__id_reserva = id_reserva
+class Reserva:
+    def __init__(self, id: int, solicitante: Morador, data_reserva, hora_inicio, hora_fim, espaco: str):
+        self.__id = id
         self.__solicitante = solicitante
         self.__data_reserva = data_reserva
         self.__hora_inicio = hora_inicio
         self.__hora_fim = hora_fim
         # implementar self.__gasto, talvez chamar gasto controller para adicionar o gasto da reserva para o morador
-        self.__custo = (hora_fim - hora_inicio)*espaco.valor_reserva
+        self.__custo = (hora_fim - hora_inicio)*50
         self.__espaco = espaco
 
     @property
-    def id_reserva(self):
-        return self.__id_reserva
+    def id(self):
+        return self.__id
     
     @property
     def custo(self):
@@ -40,10 +40,6 @@ class ReservaDeEspaco:
     @property
     def espaco(self):
         return self.__espaco
-
-    @id_reserva.setter
-    def id_reserva(self, value):
-        self.__id_reserva = value
 
     @solicitante.setter
     def solicitante(self, value):

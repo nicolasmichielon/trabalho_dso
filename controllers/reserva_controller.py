@@ -1,5 +1,6 @@
-from models.reserva import ReservaDeEspaco
+from models.reserva import Reserva
 from views.reserva_view import ReservaView
+
 
 class ReservaController:
     def __init__(self, master_controller) -> None:
@@ -23,7 +24,8 @@ class ReservaController:
                 f"Espaço: {reserva.espaco}"
             ])
 
-    def lista_reservas_por_cpf(self, cpf):
+    def lista_reservas_por_cpf(self):
+        cpf = self.__master_controller.pessoa_controller.get_cpf()
         for reserva in self.__reservas:
             if reserva.solicitante.cpf == cpf:
                 self.__reserva_view.mostraReserva([
@@ -35,3 +37,13 @@ class ReservaController:
                     f"Custo: {reserva.custo}\n"
                     f"Espaço: {reserva.espaco}"
                 ])
+
+    def adicionar_reserva(self):
+        dados = self.__reserva_view.get_reserva()
+        if len(self.__reservas) > 0:
+            next_id = self.__reservas[-1].id + 1
+        else:
+            next_id = 1
+        morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(dados["cpf_solicitante"])
+        reserva = Reserva(next_id, morador, dados["data_reserva"], dados["hora_inicio"], dados["hora_fim"], dados["espaco"])
+        self.__reservas.append(reserva)
