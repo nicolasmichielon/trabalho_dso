@@ -7,11 +7,11 @@ class OcorrenciaView():
             print(linha)
 
     def get_cpf(self):
-        return input("CPF: ")
+        return int(input("CPF: "))
     
     def get_ocorrencia(self, last_id):
         id = last_id + 1
-        cpf = input("CPF do morador: ")
+        cpf = int(input("CPF do morador: "))
         descricao = input("Descrição: ")
         while True:
             try:

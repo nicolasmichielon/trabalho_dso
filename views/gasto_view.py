@@ -14,3 +14,6 @@ class GastoView():
                 return {"tipo": tipo, "valor": valor}
             except:
                 print("Valor inválido!")
+
+    def get_cpf(self):
+        return int(input("CPF: "))
