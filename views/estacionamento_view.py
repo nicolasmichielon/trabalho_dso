@@ -1,3 +1,6 @@
+from exceptions.vaga_invalida_exception import VagaInvalidaException
+from exceptions.cpf_invalido_exception import CPFInvalidoException
+
 class EstacionamentoView():
     def __init__(self) -> None:
         pass
@@ -11,10 +14,10 @@ class EstacionamentoView():
             try:
                 vaga = int(input("Vaga: "))
                 if not vaga >= 1 and not vaga <= 15:
-                    raise ValueError
+                    raise VagaInvalidaException()
                 break
-            except ValueError:
-                print("A Vaga escolhida é inválida!")
+            except VagaInvalidaException as e:
+                print(e)
         return vaga
     
     def get_cpf(self) -> int:
@@ -22,8 +25,8 @@ class EstacionamentoView():
             try:
                 cpf = input("CPF: ")
                 if len(cpf) != 11 or not cpf.isdigit():
-                    raise ValueError
+                    raise CPFInvalidoException()
                 break
-            except ValueError:
-                print("CPF inválido! Deve conter 11 dígitos numéricos.")
+            except CPFInvalidoException as e:
+                print(e)
         return int(cpf)

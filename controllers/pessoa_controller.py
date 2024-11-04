@@ -3,6 +3,7 @@ from models.morador import Morador
 from models.sindico import Sindico
 from models.visitante import Visitante
 from exceptions.pessoa_repetida_exception import PessoaRepetidaException
+from exceptions.dados_invalidos_exception import DadosInvalidosException
 
 class PessoaController():
     def __init__(self, master_controller):
@@ -17,7 +18,7 @@ class PessoaController():
             dados = self.__pessoas_view.get_pessoa()
             sindico = Sindico(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
         except:
-            raise ValueError("Dados inválidos foram inseridos")
+            raise DadosInvalidosException()
         self.__sindico = sindico
 
 
@@ -60,7 +61,7 @@ class PessoaController():
         try:
             morador = self.__pessoas_view.get_pessoa()
         except:
-            raise ValueError("Dados inválidos foram inseridos ou o morador não existe")
+            raise DadosInvalidosException()
         if morador in self.__moradores:
             self.__moradores.remove(morador)
             self.__pessoas_view.mostrar_pessoa([morador])
@@ -69,7 +70,7 @@ class PessoaController():
         try:
             visitante = self.__pessoas_view.get_pessoa()
         except:
-            raise ValueError("Dados inválidos foram inseridos ou o visitante não existe")
+            raise DadosInvalidosException()
         if visitante in self.__visitantes:
             self.__visitantes.remove(visitante)
             self.__pessoas_view.mostrar_pessoa([visitante])

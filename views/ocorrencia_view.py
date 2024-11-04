@@ -1,3 +1,5 @@
+from exceptions.dados_invalidos_exception import DadosInvalidosException
+
 class OcorrenciaView():
     def __init__(self):
         pass
@@ -18,5 +20,5 @@ class OcorrenciaView():
                 tipo = int(input("Tipo ( 0 - agua, 1 - cachorro, 2 - gato ): "))
                 return {"id": id, "cpf": cpf, "descricao": descricao, "tipo": tipo}
             except:
-                print("Valor Inválido!")
+                print(DadosInvalidosException())
         

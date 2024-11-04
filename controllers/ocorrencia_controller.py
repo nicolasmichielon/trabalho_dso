@@ -1,5 +1,6 @@
 from views.ocorrencia_view import OcorrenciaView
 from models.ocorrencia import Ocorrencia
+from exceptions.dados_invalidos_exception import DadosInvalidosException
 
 class OcorrenciaController():
     def __init__(self, master_controller):
@@ -14,7 +15,7 @@ class OcorrenciaController():
         try:
             ocorrencia = Ocorrencia(dados.get("id"), morador, sindico_atual, dados.get("descricao"), dados.get("tipo"))
         except:
-            raise ValueError("Dados inválidos foram inseridos")
+            raise DadosInvalidosException()
         for oc in self.__ocorrencias:
             if oc.id == ocorrencia.id:
                 return

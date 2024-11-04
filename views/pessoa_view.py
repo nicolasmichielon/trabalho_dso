@@ -1,3 +1,8 @@
+from exceptions.cpf_invalido_exception import CPFInvalidoException
+from exceptions.idade_invalida_exception import IdadeInvalidaException
+from exceptions.telefone_invalido_exception import TelefoneInvalidoException
+from exceptions.nome_invalido_exception import NomeInvalidoException
+
 class PessoaView():
     def __init__(self) -> None:
         pass
@@ -11,38 +16,38 @@ class PessoaView():
             try:
                 nome = input("Nome: ")
                 if len(nome) < 2:
-                    raise ValueError
+                    raise NomeInvalidoException()
                 break
-            except ValueError:
-                print("Nome inválido! Deve ter pelo menos 2 caracteres.")
+            except NomeInvalidoException as e:
+                print(e)
         
         while True:
             try:
                 telefone = input("Telefone: ")
                 if len(telefone) < 11 or not telefone.isdigit():
-                    raise ValueError
+                    raise TelefoneInvalidoException()
                 break
-            except ValueError:
-                print("Telefone inválido! Deve conter pelo menos 11 dígitos numéricos.")
+            except TelefoneInvalidoException as e:
+                print(e)
 
         while True:
             try:
                 cpf = input("CPF: ")
                 if len(cpf) != 11 or not cpf.isdigit():
-                    raise ValueError
+                    raise CPFInvalidoException()
                 cpf = int(cpf)
                 break
-            except ValueError:
-                print("CPF inválido! Deve conter 11 dígitos numéricos.")
+            except CPFInvalidoException as e:
+                print(e)
         
         while True:
             try:
                 idade = int(input("Idade: "))
                 if idade > 130 or idade < 0:
-                    raise ValueError
+                    raise IdadeInvalidaException()
                 break
-            except ValueError:
-                print("Idade inválida! Deve ser um número entre 0 e 130.")
+            except IdadeInvalidaException as e:
+                print(e)
         
         return {"nome": nome, "telefone": telefone, "cpf": cpf, "idade": idade}
 

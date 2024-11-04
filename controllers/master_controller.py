@@ -4,6 +4,7 @@ from controllers.pessoa_controller import PessoaController
 from controllers.gasto_controller import GastoController
 from controllers.estacionamento_controller import EstacionamentoController
 from controllers.reserva_controller import ReservaController
+from exceptions.entrada_invalida_exception import EntradaInvalidaException
 
 
 class MasterController():
@@ -26,7 +27,7 @@ class MasterController():
         try:
             entrada = int(input("Escolha: "))
         except:
-            print("Entrada inválida!")
+            print(EntradaInvalidaException())
             return True
         if entrada == 0:
             return False
@@ -47,7 +48,7 @@ class MasterController():
             while switch:
                 switch = self.menuGasto()
         else: 
-            print("Entrada inválida!")
+            print(EntradaInvalidaException())
         return True
     
     def menuPessoa(self):
@@ -63,7 +64,7 @@ class MasterController():
         try:
             entrada = int(input("Escolha: "))
         except:
-            print("Entrada inválida!")
+            print(EntradaInvalidaException())
             return True
         if entrada == 0:
             return False
@@ -79,6 +80,8 @@ class MasterController():
             self.__pessoa_controller.display_visitantes()
         elif entrada == 6:
             self.__pessoa_controller.display_sindico()
+        else: 
+            print(EntradaInvalidaException())
         return True
 
     def menuEstacionamento(self):
@@ -92,7 +95,7 @@ class MasterController():
         try:
             entrada = int(input("Escolha: "))
         except:
-            print("Entrada inválida!")
+            print(EntradaInvalidaException())
             return True
         if entrada == 0:
             return False
@@ -104,6 +107,8 @@ class MasterController():
             self.__estacionamento_controller.desocupar_vaga()
         elif entrada == 4:
             self.__estacionamento_controller.display_vaga()
+        else: 
+            print(EntradaInvalidaException())
         return True
 
     def menuOcorrencia(self):
@@ -116,7 +121,7 @@ class MasterController():
         try:
             entrada = int(input("Escolha: "))
         except:
-            print("Entrada inválida!")
+            print(EntradaInvalidaException())
             return True
         if entrada == 0:
             return False
@@ -126,6 +131,8 @@ class MasterController():
             self.__ocorrencia_controller.busca_ocorrencias_por_cpf_de_morador()
         elif entrada == 3:
             self.__ocorrencia_controller.busca_ocorrencias()
+        else: 
+            print(EntradaInvalidaException())
         return True
 
     def menuGasto(self):
@@ -138,7 +145,7 @@ class MasterController():
         try:
             entrada = int(input("Escolha: "))
         except:
-            print("Entrada inválida!")
+            print(EntradaInvalidaException())
             return True
         if entrada == 0:
             return False
@@ -148,6 +155,8 @@ class MasterController():
             self.__gasto_controller.listar_gastos()
         elif entrada == 10:
             self.__gasto_controller.listar_gasto_por_cpf()
+        else: 
+            print(EntradaInvalidaException())
         return True
 
 

@@ -1,3 +1,5 @@
+from exceptions.dados_invalidos_exception import DadosInvalidosException
+
 class GastoView():
     def __init__(self) -> None:
         pass
@@ -13,7 +15,7 @@ class GastoView():
                 valor = int(input("Valor: "))
                 return {"tipo": tipo, "valor": valor}
             except:
-                print("Valor inválido!")
+                print(DadosInvalidosException())
 
     def get_cpf(self):
         return int(input("CPF: "))
