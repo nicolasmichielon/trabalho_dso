@@ -1,4 +1,6 @@
 from exceptions.dados_invalidos_exception import DadosInvalidosException
+from exceptions.descricao_invalida_exception import DescricaoInvalidaException
+from exceptions.cpf_invalido_exception import CPFInvalidoException
 
 class OcorrenciaView():
     def __init__(self):
@@ -9,15 +11,41 @@ class OcorrenciaView():
             print(linha)
 
     def get_cpf(self):
-        return int(input("CPF: "))
+        while True:
+            try:
+                cpf = input("CPF: ")
+                if len(cpf) != 11 or not cpf.isdigit():
+                    raise CPFInvalidoException()
+                cpf = int(cpf)
+                break
+            except CPFInvalidoException as e:
+                print(e)
+        return cpf
     
     def get_ocorrencia(self, last_id):
         id = last_id + 1
-        cpf = int(input("CPF do morador: "))
-        descricao = input("Descrição: ")
+
         while True:
             try:
-                tipo = int(input("Tipo ( 0 - agua, 1 - cachorro, 2 - gato ): "))
+                cpf = input("CPF do morador: ")
+                if len(cpf) != 11 or not cpf.isdigit():
+                    raise CPFInvalidoException()
+                cpf = int(cpf)
+                break
+            except CPFInvalidoException as e:
+                print(e)
+                
+        while True:
+            try:
+                descricao = input("Descrição: ")
+                if len(descricao) < 6:
+                    raise DescricaoInvalidaException()
+                break
+            except DescricaoInvalidaException as e:
+                print(e)
+
+        while True:
+            try:
                 return {"id": id, "cpf": cpf, "descricao": descricao, "tipo": tipo}
             except:
                 print(DadosInvalidosException())

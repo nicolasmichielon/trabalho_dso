@@ -51,8 +51,16 @@ class PessoaView():
         
         return {"nome": nome, "telefone": telefone, "cpf": cpf, "idade": idade}
 
-    def get_cpf(self) -> str:
-        cpf = input("CPF: ")
+    def get_cpf(self) -> int:
+        while True:
+            try:
+                cpf = input("CPF: ")
+                if len(cpf) != 11 or not cpf.isdigit():
+                    raise CPFInvalidoException()
+                cpf = int(cpf)
+                break
+            except CPFInvalidoException as e:
+                print(e)
         return cpf
 
     def pessoa_repetida(self, msg):

@@ -18,4 +18,13 @@ class GastoView():
                 print(DadosInvalidosException())
 
     def get_cpf(self):
-        return int(input("CPF: "))
+        while True:
+            try:
+                cpf = input("CPF: ")
+                if len(cpf) != 11 or not cpf.isdigit():
+                    raise CPFInvalidoException()
+                cpf = int(cpf)
+                break
+            except CPFInvalidoException as e:
+                print(e)
+        return cpf

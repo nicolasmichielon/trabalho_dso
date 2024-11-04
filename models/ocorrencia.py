@@ -3,17 +3,12 @@ from models.morador import Morador
 from models.sindico import Sindico
 
 class Ocorrencia:
-    def __init__(self, id:int, morador: Morador, sindico: Sindico, descricao: str, tipoDeOcorrencia: str, resolvida: bool = False):
+    def __init__(self, id:int, morador: Morador, sindico: Sindico, descricao: str, resolvida: bool = False):
         self.__id = id
         self.__morador = morador
         self.__sindico = sindico
         self.__descricao = descricao
         self.__resolvida = resolvida
-        self.__tipoDeOcorrencia = TipoDeOcorrencia(tipoDeOcorrencia)
-
-    @property
-    def tipoDeOcorrencia(self):
-        return self.__tipoDeOcorrencia
 
     @property
     def id(self):
@@ -38,10 +33,6 @@ class Ocorrencia:
     @resolvida.setter
     def resolvida(self, value: bool):
         self.__resolvida = value
-
-    @tipoDeOcorrencia.setter
-    def tipoDeOcorrencia(self, tipo):
-        self.__tipoDeOcorrencia = tipo
         
     @descricao.setter
     def descricao(self, descricao):
