@@ -15,7 +15,7 @@ class ReservaController:
         return self.__reservas
     
     def lista_reservas(self):
-        try:
+        if len(self.__reservas) > 0:
             for reserva in self.__reservas:
                 self.__reserva_view.mostraReserva([
                     f"ID Reserva: {reserva.id}\n"
@@ -26,7 +26,7 @@ class ReservaController:
                     f"Custo: {reserva.custo}\n"
                     f"Espaço: {reserva.espaco}"
                 ])
-        except:
+        else:
             print("Nenhuma reserva encontrada")
 
     def lista_reservas_por_cpf(self):
