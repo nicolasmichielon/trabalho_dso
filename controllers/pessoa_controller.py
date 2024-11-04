@@ -24,7 +24,7 @@ class PessoaController():
             dados = self.__pessoas_view.get_pessoa()
             sindico = Sindico(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
         except:
-            raise DadosInvalidosException()
+            print(DadosInvalidosException())
         self.__sindico = sindico
 
 
@@ -68,7 +68,7 @@ class PessoaController():
             cpf_morador = self.__pessoas_view.get_cpf()
             morador = self.busca_morador_por_cpf(cpf_morador)
         except:
-            raise DadosInvalidosException()
+            print(DadosInvalidosException())
         if morador == None:
             print(MoradorNaoEncontradoException())
         elif morador in self.__moradores:
@@ -80,7 +80,7 @@ class PessoaController():
             cpf_visitante = self.__pessoas_view.get_cpf()
             visitante = self.busca_visitante_por_cpf(cpf_visitante)
         except:
-            raise DadosInvalidosException()
+            print(DadosInvalidosException())
         if visitante == None:
             print(VisitanteNaoEncontradoException())
         if visitante in self.__visitantes:
@@ -107,7 +107,6 @@ class PessoaController():
                     f"Nome: {visitante.nome}",
                     "-------------------------------"])
                 return visitante
-        print("CPF nao encontrado")
         return None
             
     def get_sindico(self) -> Sindico:

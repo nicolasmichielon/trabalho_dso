@@ -15,7 +15,7 @@ class OcorrenciaController():
         try:
             ocorrencia = Ocorrencia(dados.get("id"), morador, sindico_atual, dados.get("descricao"), dados.get("tipo"))
         except:
-            raise DadosInvalidosException()
+            print(DadosInvalidosException())
         for oc in self.__ocorrencias:
             if oc.id == ocorrencia.id:
                 return

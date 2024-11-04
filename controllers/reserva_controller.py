@@ -1,6 +1,5 @@
 from models.reserva import Reserva
 from views.reserva_view import ReservaView
-from exceptions.dados_invalidos_exception import DadosInvalidosException
 from exceptions.morador_nao_encontrado_exception import MoradorNaoEncontradoException
 from exceptions.nenhuma_reserva_exception import NenhumaReservaException
 from exceptions.nenhuma_reserva_pro_cpf_exception import NenhumaReservaProCPFException
@@ -16,21 +15,25 @@ class ReservaController:
         return self.__reservas
     
     def lista_reservas(self):
-        if len(self.__reservas) > 0:
-            for reserva in self.__reservas:
-                self.__reserva_view.mostraReserva([
-                    f"ID Reserva: {reserva.id}\n"
-                    f"Solicitante: {reserva.solicitante}\n"
-                    f"Data: {reserva.data_reserva}\n"
-                    f"Hora ínicio: {reserva.hora_inicio}\n"
-                    f"Hora fim: {reserva.hora_fim}\n"
-                    f"Custo: {reserva.custo}\n"
-                    f"Espaço: {reserva.espaco}"
-                ])
-        else:
+        try:
+            if len(self.__reservas) > 0:
+                for reserva in self.__reservas:
+                    self.__reserva_view.mostraReserva([
+                        f"ID Reserva: {reserva.id}\n"
+                        f"Solicitante: {reserva.solicitante}\n"
+                        f"Data: {reserva.data_reserva}\n"
+                        f"Hora ínicio: {reserva.hora_inicio}\n"
+                        f"Hora fim: {reserva.hora_fim}\n"
+                        f"Custo: {reserva.custo}\n"
+                        f"Espaço: {reserva.espaco}"
+                    ])
+            else:
+                raise NenhumaReservaException()
+        except NenhumaReservaException as e:
             print()
-            print(NenhumaReservaException())
+            print(e)
             print()
+
 
     def lista_reservas_por_cpf(self):
         try:
@@ -51,14 +54,18 @@ class ReservaController:
                             f"Espaço: {reserva.espaco}"
                         ])
                         return
-                print()
-                print(NenhumaReservaProCPFException())
-                print()
+                raise NenhumaReservaProCPFException()
             else:
-                print()
-                print(NenhumaReservaException())
-                print()
+                raise NenhumaReservaException()
         except MoradorNaoEncontradoException as e:
+            print()
+            print(e)
+            print()
+        except NenhumaReservaProCPFException as e:
+            print()
+            print(e)
+            print()
+        except NenhumaReservaException as e:
             print()
             print(e)
             print()
