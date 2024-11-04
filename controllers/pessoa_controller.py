@@ -4,6 +4,12 @@ from models.sindico import Sindico
 from models.visitante import Visitante
 from exceptions.pessoa_repetida_exception import PessoaRepetidaException
 from exceptions.dados_invalidos_exception import DadosInvalidosException
+from exceptions.morador_nao_encontrado_exception import MoradorNaoEncontradoException
+from exceptions.visitante_nao_encontrado_exception import VisitanteNaoEncontradoException
+from exceptions.pessoa_nao_cadastrada_exception import PessoaNaoCadastradaException
+from exceptions.nenhum_morador_exception import NenhumMoradorException
+from exceptions.nenhum_visitante_exception import NenhumVisitanteException
+from exceptions.nenhum_sindico_exception import NenhumSindicoException
 
 class PessoaController():
     def __init__(self, master_controller):
@@ -59,18 +65,24 @@ class PessoaController():
 
     def remover_morador(self):
         try:
-            morador = self.__pessoas_view.get_pessoa()
+            cpf_morador = self.__pessoas_view.get_cpf()
+            morador = self.busca_morador_por_cpf(cpf_morador)
         except:
             raise DadosInvalidosException()
-        if morador in self.__moradores:
+        if morador == None:
+            print(MoradorNaoEncontradoException())
+        elif morador in self.__moradores:
             self.__moradores.remove(morador)
             self.__pessoas_view.mostrar_pessoa([morador])
 
     def remover_visitante(self):
         try:
-            visitante = self.__pessoas_view.get_pessoa()
+            cpf_visitante = self.__pessoas_view.get_cpf()
+            visitante = self.busca_visitante_por_cpf(cpf_visitante)
         except:
             raise DadosInvalidosException()
+        if visitante == None:
+            print(VisitanteNaoEncontradoException())
         if visitante in self.__visitantes:
             self.__visitantes.remove(visitante)
             self.__pessoas_view.mostrar_pessoa([visitante])
@@ -101,25 +113,15 @@ class PessoaController():
     def get_sindico(self) -> Sindico:
         return self.__sindico
 
-   # def busca_pessoa_por_cpf(self, cpf: int):
-   #     if cpf == self.__sindico.cpf:
-   #        return self.__sindico
-   #     else:
-   #         for v in self.__visitantes:
-   #             if v.cpf == cpf:
-   #                 return v
-   #         for m in self.__moradores:
-   #             if m.cpf == cpf:
-   #                 return m
-   #     return f"Pessoa nao encontrada no sistema..."
-
     def get_tipo_de_pessoa(self, cpf: int) -> str:
         if self.busca_morador_por_cpf(cpf):
             return f"Morador"
         elif self.busca_visitante_por_cpf(cpf):
             return f"Visitante"
-        else:
+        elif cpf == self.get_sindico().cpf:
             return f"Sindico"
+        else:
+            print(PessoaNaoCadastradaException())
 
             
     def get_cpf(self) -> str:
@@ -127,22 +129,45 @@ class PessoaController():
 
     def trocar_sindico(self, novo_sindico: Sindico):
         self.__sindico = novo_sindico
+        print("Sindico trocado com sucesso")
 
     def display_sindico(self):
-        self.__pessoas_view.mostrar_pessoa([self.__sindico])
+        if self.__sindico != None:
+            self.__pessoas_view.mostrar_pessoa([
+                    "-------------------------------",
+                    f"Nome: {self.__sindico.nome}",
+                    f"CPF: {self.__sindico.cpf}",
+                    "-------------------------------",
+                ])
+        else:
+            print()
+            print(NenhumSindicoException())
+            print()
 
     def display_moradores(self):
-        for morador in self.__moradores:
-            self.__pessoas_view.mostrar_pessoa([
-                "-------------------------------",
-                f"Nome: {morador.nome}",
-                f"CPF: {morador.cpf}",
-            ])
+        if len(self.__moradores) > 0:
+            for morador in self.__moradores:
+                self.__pessoas_view.mostrar_pessoa([
+                    "-------------------------------",
+                    f"Nome: {morador.nome}",
+                    f"CPF: {morador.cpf}",
+                    "-------------------------------",
+                ])
+        else:
+            print()
+            print(NenhumMoradorException())
+            print()
 
     def display_visitantes(self):
-        for visitante in self.__visitantes:
-            self.__pessoas_view.mostrar_pessoa([
-                "-------------------------------",
-                f"Nome: {visitante.nome}",
-                f"CPF: {visitante.cpf}",
-            ])
+        if len(self.__visitantes) > 0:
+            for visitante in self.__visitantes:
+                self.__pessoas_view.mostrar_pessoa([
+                    "-------------------------------",
+                    f"Nome: {visitante.nome}",
+                    f"CPF: {visitante.cpf}",
+                    "-------------------------------",
+                ])
+        else:
+            print()
+            print(NenhumVisitanteException())
+            print()
