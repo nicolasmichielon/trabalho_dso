@@ -84,7 +84,6 @@ class PessoaController():
                     f"Nome: {morador.nome}",
                     "-------------------------------"])
                 return morador
-        print("CPF nao encontrado")
         return None
 
     def busca_visitante_por_cpf(self, cpf) -> Visitante:
