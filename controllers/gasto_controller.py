@@ -28,7 +28,6 @@ class GastoController():
             print(DadosInvalidosException())
             print()
 
-
     def listar_gasto_por_cpf(self):
         try:
             cpf = self.__master_controller.pessoa_controller.get_cpf()
@@ -36,17 +35,20 @@ class GastoController():
             if existe_morador == None:
                 raise MoradorNaoEncontradoException()
             if len(self.__gastos) > 0:
+                existe_gasto = 0
                 for gasto in self.__gastos:
                     if gasto.morador.cpf == cpf:
                         self.__gastos_view.mostrar_gastos([
-                            "---------------------",
+                            "--------------------------",
                             f"Valor: {gasto.valor}",
                             f"Tipo: {gasto.tipo_de_gasto}",
                             f"Pago? {"Sim" if gasto.pago else "Não"}"
                         ])
-                print()
-                print(NenhumGastoProCPFException())
-                print()
+                        existe_gasto = 1
+                if not existe_gasto:
+                    print()
+                    print(NenhumGastoProCPFException())
+                    print()
             else:
                 print()
                 print(NenhumGastoException())
@@ -98,5 +100,25 @@ class GastoController():
             print(e)
             print()
 
+    def gerar_relatorio(self):
+        try:
+            if len(self.__gastos) > 0:
+                total_gastos = sum(gasto.valor for gasto in self.__gastos)
+                quantidade_gastos = len(self.__gastos)
+                media_gastos = total_gastos / quantidade_gastos
 
-
+                self.__gastos_view.mostrar_gastos([
+                    "---------------------",
+                    f"Total de gastos gerados no condomínio: R${total_gastos}",
+                    f"Quantidade de gastos no condomínio: {quantidade_gastos}",
+                    f"Média de gastos por morador: R${media_gastos:.2f}",
+                    "---------------------"
+                ])
+            else:
+                print()
+                print(NenhumGastoException())
+                print()
+        except Exception as e:
+            print()
+            print(e)
+            print()

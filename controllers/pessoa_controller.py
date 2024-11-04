@@ -33,10 +33,10 @@ class PessoaController():
             dados = self.__pessoas_view.get_pessoa()
             morador = Morador(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
             cpfs = []
-            for morador in self.__moradores:
-                cpfs.append(morador.cpf)
-            for visitante in self.__visitantes:
-                cpfs.append(visitante.cpf)
+            for m in self.__moradores:
+                cpfs.append(m.cpf)
+            for v in self.__visitantes:
+                cpfs.append(v.cpf)
             if morador.cpf not in cpfs:
                 self.__moradores.append(morador)
                 self.__pessoas_view.mostrar_pessoa([morador])
