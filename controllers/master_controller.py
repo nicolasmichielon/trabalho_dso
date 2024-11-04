@@ -66,6 +66,8 @@ class MasterController():
         print("4: Visualizar todos os moradores")
         print("5: Visualizar todos os visitantes")
         print("6: Visualizar sindico")
+        print("7: Remover Morador por CPF")
+        print("8: Remover Visitante por CPF")
         try:
             entrada = int(input("Escolha: "))
         except:
@@ -85,6 +87,10 @@ class MasterController():
             self.__pessoa_controller.display_visitantes()
         elif entrada == 6:
             self.__pessoa_controller.display_sindico()
+        elif entrada == 7:
+            self.__pessoa_controller.remover_morador()
+        elif entrada == 8:
+            self.__pessoa_controller.remover_visitante()
         else: 
             print(EntradaInvalidaException())
         return True
@@ -147,6 +153,7 @@ class MasterController():
         print("1: Cadastrar gasto")
         print("2: Visualizar todos os gastos")
         print("3: Visualizar gasto por morador")
+        print("4: Gerar relatório geral de gastos")
         try:
             entrada = int(input("Escolha: "))
         except:
@@ -160,6 +167,8 @@ class MasterController():
             self.__gasto_controller.listar_gastos()
         elif entrada == 3:
             self.__gasto_controller.listar_gasto_por_cpf()
+        elif entrada == 4:
+            self.__gasto_controller.gerar_relatorio()
         else: 
             print(EntradaInvalidaException())
         return True
