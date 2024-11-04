@@ -46,7 +46,7 @@ class OcorrenciaView():
 
         while True:
             try:
-                return {"id": id, "cpf": cpf, "descricao": descricao, "tipo": tipo}
+                return {"id": id, "cpf": cpf, "descricao": descricao}
             except:
                 print(DadosInvalidosException())
         

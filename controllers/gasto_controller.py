@@ -20,9 +20,13 @@ class GastoController():
             gasto = Gasto(dados.get("valor"), morador, False, dados.get("tipo"))
             self.__gastos.append(gasto)
         except MoradorNaoEncontradoException as e:
+            print()
             print(e)
+            print()
         except:
+            print()
             print(DadosInvalidosException())
+            print()
 
 
     def listar_gasto_por_cpf(self):
