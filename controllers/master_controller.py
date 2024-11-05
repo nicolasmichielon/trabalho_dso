@@ -154,6 +154,7 @@ class MasterController():
         print("2: Visualizar todos os gastos")
         print("3: Visualizar gasto por morador")
         print("4: Gerar relatório geral de gastos")
+        print("5: Pagar gasto")
         try:
             entrada = int(input("Escolha: "))
         except:
@@ -169,6 +170,8 @@ class MasterController():
             self.__gasto_controller.listar_gasto_por_cpf()
         elif entrada == 4:
             self.__gasto_controller.gerar_relatorio()
+        elif entrada == 5:
+            self.__gasto_controller.pagar_gasto()
         else: 
             print(EntradaInvalidaException())
         return True

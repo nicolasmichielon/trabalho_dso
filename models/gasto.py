@@ -1,13 +1,16 @@
 from models.morador import Morador
-from models.tipo_de_gasto import TipoDeGasto
-
 
 class Gasto():
-    def __init__(self, valor:float, morador:Morador, pago:bool, tipo_de_gasto:TipoDeGasto):
+    def __init__(self, id: int, valor:float, morador:Morador, pago:bool, tipo_de_gasto:str):
+        self.__id = id
         self.__valor = valor
         self.__morador = morador
         self.__pago = pago
         self.__tipo_de_gasto = tipo_de_gasto
+
+    @property
+    def id(self):
+        return self.__id
 
     @property
     def tipo_de_gasto(self):

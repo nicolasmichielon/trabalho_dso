@@ -20,7 +20,7 @@ class ReservaController:
                 for reserva in self.__reservas:
                     self.__reserva_view.mostraReserva([
                         f"ID Reserva: {reserva.id}\n"
-                        f"Solicitante: {reserva.solicitante}\n"
+                        f"Solicitante: {reserva.solicitante.nome}\n"
                         f"Data: {reserva.data_reserva}\n"
                         f"Hora ínicio: {reserva.hora_inicio}\n"
                         f"Hora fim: {reserva.hora_fim}\n"
@@ -83,6 +83,7 @@ class ReservaController:
             if morador == None:
                 raise MoradorNaoEncontradoException()
             reserva = Reserva(next_id, morador, dados["data_reserva"], dados["hora_inicio"], dados["hora_fim"], dados["espaco"])
+            self.__master_controller.gasto_controller.adicionar_gasto_reserva(reserva.custo, morador)
             self.__reservas.append(reserva)
         except MoradorNaoEncontradoException as e:
             print(e)

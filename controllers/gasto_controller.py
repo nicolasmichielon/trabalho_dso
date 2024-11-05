@@ -4,6 +4,7 @@ from exceptions.dados_invalidos_exception import DadosInvalidosException
 from exceptions.morador_nao_encontrado_exception import MoradorNaoEncontradoException
 from exceptions.nenhum_gasto_pro_cpf_exception import NenhumGastoProCPFException
 from exceptions.nenhum_gasto_exception import NenhumGastoException
+from exceptions.id_invalido_exception import IDInvalidoException
 
 class GastoController():
     def __init__(self, master_controller) -> None:
@@ -17,7 +18,7 @@ class GastoController():
             morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(self.__gastos_view.get_cpf())
             if morador == None:
                 raise MoradorNaoEncontradoException()
-            gasto = Gasto(dados.get("valor"), morador, False, dados.get("tipo"))
+            gasto = Gasto(self.__gastos[-1].id + 1, dados.get("valor"), morador, False, dados.get("tipo"))
             self.__gastos.append(gasto)
         except MoradorNaoEncontradoException as e:
             print()
@@ -27,6 +28,16 @@ class GastoController():
             print()
             print(DadosInvalidosException())
             print()
+
+    def adicionar_gasto_reserva(self, valor, morador):
+            if morador == None:
+                raise MoradorNaoEncontradoException()
+            if len(self.__gastos) == 0:
+                id = 1
+            else:
+                id = self.__gastos[-1].id + 1
+            gasto = Gasto(id, valor, morador, False, "reserva")
+            self.__gastos.append(gasto)
 
     def listar_gasto_por_cpf(self):
         try:
@@ -40,6 +51,7 @@ class GastoController():
                     if gasto.morador.cpf == cpf:
                         self.__gastos_view.mostrar_gastos([
                             "--------------------------",
+                            f"ID: {gasto.id}", 
                             f"Valor: {gasto.valor}",
                             f"Tipo: {gasto.tipo_de_gasto}",
                             f"Pago? {"Sim" if gasto.pago else "Não"}"
@@ -122,3 +134,30 @@ class GastoController():
             print()
             print(e)
             print()
+
+    def pagar_gasto(self):
+        try:
+            cpf = self.__gastos_view.get_cpf()
+            ids_validos = []
+            for gasto in self.__gastos:
+                if cpf == gasto.morador.cpf and gasto.pago == False:
+                    self.__gastos_view.mostrar_gastos([
+                        "--------------------------",
+                        f"ID: {gasto.id}", 
+                        f"Valor: {gasto.valor}",
+                        f"Tipo: {gasto.tipo_de_gasto}",
+                        f"Pago? {"Sim" if gasto.pago else "Não"}"
+                    ])
+                    ids_validos.append(gasto.id)
+            gasto_id = self.__gastos_view.get_gasto_id()
+            if gasto_id not in ids_validos:
+                raise IDInvalidoException()
+            else:
+                self.__gastos[gasto_id - 1].pago = True
+                self.__gastos_view.gasto_pago()
+        except IDInvalidoException as e:
+            print()
+            print(e)
+            print()
+
+

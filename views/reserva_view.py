@@ -14,7 +14,7 @@ class ReservaView:
     def get_reserva(self) -> dict:
         while True:
             try:
-                cpf_solicitante = int(input("CPF do solicitante: "))
+                cpf_solicitante = input("CPF do solicitante: ")
                 if len(cpf_solicitante) != 11 or not cpf_solicitante.isdigit():
                     raise CPFInvalidoException()
                 cpf_solicitante = int(cpf_solicitante)

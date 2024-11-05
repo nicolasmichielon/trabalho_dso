@@ -1,4 +1,6 @@
 from exceptions.dados_invalidos_exception import DadosInvalidosException
+from exceptions.cpf_invalido_exception import CPFInvalidoException
+from exceptions.id_invalido_exception import IDInvalidoException
 
 class GastoView():
     def __init__(self) -> None:
@@ -28,3 +30,18 @@ class GastoView():
             except CPFInvalidoException as e:
                 print(e)
         return cpf
+    
+    def get_gasto_id(self):
+        while True:
+            try:
+                id = input("ID do gasto a ser pago: ")
+                if not id.isdigit():
+                    raise IDInvalidoException()
+                id = int(id)
+                break
+            except IDInvalidoException as e:
+                print(e)
+        return id
+    
+    def gasto_pago(self):
+        print("Gasto pago com sucesso!")

@@ -40,6 +40,3 @@ class Pessoa:
     def idade(self, idade: int = None):
         if idade is not None:
             self.__idade = idade
-
-    def fazer_aniversario(self):
-        self.__idade += 1

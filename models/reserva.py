@@ -1,5 +1,3 @@
-from models.espaco import Espaco
-from models.gasto import Gasto
 from models.morador import Morador
 
 class Reserva:
@@ -9,7 +7,6 @@ class Reserva:
         self.__data_reserva = data_reserva
         self.__hora_inicio = hora_inicio
         self.__hora_fim = hora_fim
-        # implementar self.__gasto, talvez chamar gasto controller para adicionar o gasto da reserva para o morador
         self.__custo = (hora_fim - hora_inicio)*50
         self.__espaco = espaco
 
@@ -57,6 +54,3 @@ class Reserva:
     def hora_fim(self, value):
         self.__hora_fim = value
 
-    @espaco.setter
-    def espaco(self, value: Espaco):
-        self.__espaco = value
