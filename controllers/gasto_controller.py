@@ -18,26 +18,26 @@ class GastoController():
             morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(self.__gastos_view.get_cpf())
             if morador == None:
                 raise MoradorNaoEncontradoException()
-            gasto = Gasto(self.__gastos[-1].id + 1, dados.get("valor"), morador, False, dados.get("tipo"))
+            if len(self.__gastos) == 0:
+                id = 1
+            else:
+                id = self.__gastos[-1].id + 1
+            gasto = Gasto(id, dados.get("valor"), morador, False, dados.get("tipo"))
             self.__gastos.append(gasto)
         except MoradorNaoEncontradoException as e:
             print()
             print(e)
             print()
-        except:
-            print()
-            print(DadosInvalidosException())
-            print()
 
     def adicionar_gasto_reserva(self, valor, morador):
-            if morador == None:
-                raise MoradorNaoEncontradoException()
-            if len(self.__gastos) == 0:
-                id = 1
-            else:
-                id = self.__gastos[-1].id + 1
-            gasto = Gasto(id, valor, morador, False, "reserva")
-            self.__gastos.append(gasto)
+        if morador == None:
+            raise MoradorNaoEncontradoException()
+        if len(self.__gastos) == 0:
+            id = 1
+        else:
+            id = self.__gastos[-1].id + 1
+        gasto = Gasto(id, valor, morador, False, "reserva")
+        self.__gastos.append(gasto)
 
     def listar_gasto_por_cpf(self):
         try:
@@ -117,7 +117,8 @@ class GastoController():
             if len(self.__gastos) > 0:
                 total_gastos = sum(gasto.valor for gasto in self.__gastos)
                 quantidade_gastos = len(self.__gastos)
-                media_gastos = total_gastos / quantidade_gastos
+                quantidade_moradores = len(self.__master_controller.pessoa_controller.moradores)
+                media_gastos = total_gastos / quantidade_moradores
 
                 self.__gastos_view.mostrar_gastos([
                     "---------------------",

@@ -19,6 +19,10 @@ class PessoaController():
         self.__visitantes = []
         self.__sindico = None
 
+    @property
+    def moradores(self):
+        return self.__moradores
+
     def adicionar_sindico(self):
         try:
             dados = self.__pessoas_view.get_pessoa()
