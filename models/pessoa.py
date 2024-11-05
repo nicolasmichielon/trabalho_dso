@@ -1,4 +1,6 @@
-class Pessoa:
+import abc import ABC, abstractmethod
+
+class Pessoa(ABC):
     def __init__(self, nome: str, telefone: str, cpf: str, idade: int):
         self.__nome = nome
         self.__telefone = telefone
