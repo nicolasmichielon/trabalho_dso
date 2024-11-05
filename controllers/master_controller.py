@@ -183,6 +183,7 @@ class MasterController():
         print("1: Cadastrar reserva")
         print("2: Visualizar todas as reservas")
         print("3: Visualizar reserva por morador")
+        print("4: Remover reserva por ID")
         try:
             entrada = int(input("Escolha: "))
         except:
@@ -196,6 +197,8 @@ class MasterController():
             self.__reserva_controller.lista_reservas()
         elif entrada == 3:
             self.__reserva_controller.lista_reservas_por_cpf()
+        elif entrada == 4:
+            self.__reserva_controller.remover_reserva()
         return True
 
 

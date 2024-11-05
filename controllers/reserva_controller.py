@@ -3,6 +3,7 @@ from views.reserva_view import ReservaView
 from exceptions.morador_nao_encontrado_exception import MoradorNaoEncontradoException
 from exceptions.nenhuma_reserva_exception import NenhumaReservaException
 from exceptions.nenhuma_reserva_pro_cpf_exception import NenhumaReservaProCPFException
+from exceptions.id_invalido_exception import IDInvalidoException
 
 class ReservaController:
     def __init__(self, master_controller) -> None:
@@ -86,4 +87,16 @@ class ReservaController:
             self.__master_controller.gasto_controller.adicionar_gasto_reserva(reserva.custo, morador)
             self.__reservas.append(reserva)
         except MoradorNaoEncontradoException as e:
+            print(e)
+
+    def remover_reserva(self):
+        try:
+            id = self.__reserva_view.get_reserva_id()
+            for reserva in self.__reservas:
+                if reserva.id == id:
+                    self.__reservas.remove(reserva)
+                    self.__reserva_view.reserva_removida()
+                    return
+            raise IDInvalidoException()
+        except IDInvalidoException as e:
             print(e)

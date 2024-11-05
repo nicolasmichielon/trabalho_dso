@@ -2,6 +2,7 @@ from exceptions.cpf_invalido_exception import CPFInvalidoException
 from exceptions.data_invalida_exception import DataInvalidaException
 from exceptions.espaco_invalido_exception import EspacoInvalidoException
 from exceptions.horario_invalido_exception import HorarioInvalidoException
+from exceptions.id_invalido_exception import IDInvalidoException
 
 class ReservaView:
     def __init__(self) -> None:
@@ -34,7 +35,7 @@ class ReservaView:
         while True:
             try:
                 hora_inicio = int(input("Hora de início: "))
-                if not hora_inicio <= 24 and not hora_inicio >= 0:
+                if not (hora_inicio <= 24 and hora_inicio >= 0):
                     raise HorarioInvalidoException()
                 break
             except HorarioInvalidoException as e:
@@ -43,7 +44,7 @@ class ReservaView:
         while True:
             try:
                 hora_fim = int(input("Hora de fim: "))
-                if not hora_fim <= 24 and not hora_fim >= 0:
+                if not (hora_fim <= 24 and hora_fim >= 0):
                     raise HorarioInvalidoException()
                 break
             except HorarioInvalidoException as e:
@@ -52,7 +53,7 @@ class ReservaView:
         while True:
             try:
                 espaco = input("Espaço: ")
-                if len(espaco) < 6:
+                if len(espaco) < 5:
                     raise EspacoInvalidoException()
                 break
             except EspacoInvalidoException as e:
@@ -77,3 +78,18 @@ class ReservaView:
             except CPFInvalidoException as e:
                 print(e)
         return cpf
+    
+    def get_reserva_id(self):
+        while True:
+            try:
+                id = input("ID da reserva a ser deletada: ")
+                if not id.isdigit():
+                    raise IDInvalidoException()
+                id = int(id)
+                break
+            except IDInvalidoException as e:
+                print(e)
+        return id
+    
+    def reserva_removida(self):
+        print("Reserva removida com sucesso!")
