@@ -1,10 +1,10 @@
-
 from controllers.ocorrencia_controller import OcorrenciaController
 from controllers.pessoa_controller import PessoaController
 from controllers.gasto_controller import GastoController
 from controllers.estacionamento_controller import EstacionamentoController
 from controllers.reserva_controller import ReservaController
 from exceptions.entrada_invalida_exception import EntradaInvalidaException
+from views.master_view import MasterView
 
 
 class MasterController():
@@ -14,21 +14,24 @@ class MasterController():
         self.__gasto_controller = GastoController(self)
         self.__estacionamento_controller = EstacionamentoController(self)
         self.__reserva_controller = ReservaController(self)
+        self.__master_view = MasterView()
 
     def iniciarSistema(self):
         entrada = None
-        print("================== MENU ==================")
-        print("0: Fechar o sistema")
-        print("1: Entrar no Menu de Pessoas")
-        print("2: Entrar no Menu de Ocorrencias")
-        print("3: Entrar no Menu do Estacionamento")
-        print("4: Entrar no Menu de Gastos")
-        print("5: Entrar no Menu de Reservas")
-        print("===========================================")
+        self.__master_view.mostra_opcoes([
+            "================== MENU ==================",
+            "0: Fechar o sistema",
+            "1: Entrar no Menu de Pessoas",
+            "2: Entrar no Menu de Ocorrencias",
+            "3: Entrar no Menu do Estacionamento",
+            "4: Entrar no Menu de Gastos",
+            "5: Entrar no Menu de Reservas",
+            "==========================================="
+        ])
         try:
-            entrada = int(input("Escolha: "))
+            entrada = self.__master_view.solicitar_resposta()
         except:
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == 0:
             return False
@@ -53,25 +56,27 @@ class MasterController():
             while switch:
                 switch = self.menuReserva()
         else: 
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
         return True
     
     def menuPessoa(self):
         entrada = None
-        print("================== MENU DE PESSOAS ==================")
-        print("0: Retornar ao Menu Princial")
-        print("1: Adicionar Morador")
-        print("2: Adicionar Visitante")
-        print("3: Adicionar Sindico")
-        print("4: Visualizar todos os moradores")
-        print("5: Visualizar todos os visitantes")
-        print("6: Visualizar sindico")
-        print("7: Remover Morador por CPF")
-        print("8: Remover Visitante por CPF")
+        self.__master_view.mostra_opcoes([
+            "================== MENU DE PESSOAS ==================",
+            "0: Retornar ao Menu Princial",
+            "1: Adicionar Morador",
+            "2: Adicionar Visitante",
+            "3: Adicionar Sindico",
+            "4: Visualizar todos os moradores",
+            "5: Visualizar todos os visitantes",
+            "6: Visualizar sindico",
+            "7: Remover Morador por CPF",
+            "8: Remover Visitante por CPF",
+        ])
         try:
-            entrada = int(input("Escolha: "))
+            entrada = self.__master_view.solicitar_resposta()
         except:
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == 0:
             return False
@@ -92,21 +97,23 @@ class MasterController():
         elif entrada == 8:
             self.__pessoa_controller.remover_visitante()
         else: 
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
         return True
 
     def menuEstacionamento(self):
         entrada = None
-        print("================== MENU DO ESTACIONAMENTO ==================")
-        print("0: Retornar ao Menu Princial")
-        print("1: Visualizar estacionamento")
-        print("2: Ocupar vaga")
-        print("3: Desocupar vaga")
-        print("4: Visualizar vaga")
+        self.__master_view.mostra_opcoes([
+            "================== MENU DO ESTACIONAMENTO ==================",
+            "0: Retornar ao Menu Principal",
+            "1: Visualizar estacionamento",
+            "2: Ocupar vaga",
+            "3: Desocupar vaga",
+            "4: Visualizar vaga",
+        ])
         try:
-            entrada = int(input("Escolha: "))
+            entrada = self.__master_view.solicitar_resposta()
         except:
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == 0:
             return False
@@ -119,20 +126,22 @@ class MasterController():
         elif entrada == 4:
             self.__estacionamento_controller.display_vaga()
         else: 
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
         return True
 
     def menuOcorrencia(self):
         entrada = None
-        print("================== MENU DE OCORRENCIAS ==================")
-        print("0: Retornar ao Menu Princial")
-        print("1: Criar Ocorrencia")
-        print("2: Buscar Ocorrencia por CPF de morador")
-        print("3: Visualizar todas as ocorrências")
+        self.__master_view.mostra_opcoes([
+            "================== MENU DE OCORRENCIAS ==================",
+            "0: Retornar ao Menu Principal",
+            "1: Criar Ocorrencia",
+            "2: Buscar Ocorrencia por CPF de morador",
+            "3: Visualizar todas as ocorrências",
+        ])
         try:
-            entrada = int(input("Escolha: "))
+            entrada = self.__master_view.solicitar_resposta()
         except:
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == 0:
             return False
@@ -143,22 +152,24 @@ class MasterController():
         elif entrada == 3:
             self.__ocorrencia_controller.busca_ocorrencias()
         else: 
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
         return True
 
     def menuGasto(self):
         entrada = None
-        print("================== MENU DE GASTOS ==================")
-        print("0: Retornar ao Menu Princial")
-        print("1: Cadastrar gasto")
-        print("2: Visualizar todos os gastos")
-        print("3: Visualizar gasto por morador")
-        print("4: Gerar relatório geral de gastos")
-        print("5: Pagar gasto")
+        self.__master_view.mostra_opcoes([
+            "================== MENU DE GASTOS ==================",
+            "0: Retornar ao Menu Principal",
+            "1: Cadastrar gasto",
+            "2: Visualizar todos os gastos",
+            "3: Visualizar gasto por morador",
+            "4: Gerar relatório geral de gastos",
+            "5: Pagar gasto",
+        ])
         try:
-            entrada = int(input("Escolha: "))
+            entrada = self.__master_view.solicitar_resposta()
         except:
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == 0:
             return False
@@ -173,21 +184,23 @@ class MasterController():
         elif entrada == 5:
             self.__gasto_controller.pagar_gasto()
         else: 
-            print(EntradaInvalidaException())
+            self.__master_view.mostra_erro(EntradaInvalidaException)
         return True
     
     def menuReserva(self):
         entrada = None
-        print("================== MENU DE RESERVAS ==================")
-        print("0: Retornar ao Menu Princial")
-        print("1: Cadastrar reserva")
-        print("2: Visualizar todas as reservas")
-        print("3: Visualizar reserva por morador")
-        print("4: Remover reserva por ID")
+        self.__master_view.mostra_opcoes([
+            "================== MENU DE RESERVAS ==================",
+            "0: Retornar ao Menu Principal",
+            "1: Cadastrar reserva",
+            "2: Visualizar todas as reservas",
+            "3: Visualizar reserva por morador",
+            "4: Remover reserva por ID",
+        ])
         try:
-            entrada = int(input("Escolha: "))
+            entrada = self.__master_view.solicitar_resposta()
         except:
-            print("Entrada inválida!")
+            self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == 0:
             return False
