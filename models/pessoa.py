@@ -7,6 +7,10 @@ class Pessoa(ABC):
         self.__cpf = cpf
         self.__idade = idade
 
+    @abstractmethod
+    def abstract_method(self):
+        None
+
     @property
     def telefone(self):
         return self.__telefone

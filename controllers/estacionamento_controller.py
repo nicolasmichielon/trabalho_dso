@@ -37,8 +37,9 @@ class EstacionamentoController():
     def ocupar_vaga(self):
         try:
             cpf_pessoa = self.__estacionamento_view.get_cpf()
+            pessoa = self.__master_controller.pessoa_controller.busca_morador_por_cpf(cpf_pessoa)
             num_vaga = self.__estacionamento_view.get_vaga()
-            tipo_da_pessoa = self.__master_controller.pessoa_controller.get_tipo_de_pessoa(cpf_pessoa)
+            tipo_da_pessoa = self.__master_controller.pessoa_controller.get_tipo_de_pessoa(pessoa.cpf)
             for v in self.__vagas:
                 tv = v.tipo_de_vaga
                 if tv == tipo_da_pessoa:
@@ -47,7 +48,7 @@ class EstacionamentoController():
                             raise ValueError("Esta vaga já está ocupada.")
                         else:
                             v.ocupado = True
-                            v.pessoa = cpf_pessoa
+                            v.pessoa = pessoa
                             print("Vaga ocupada")
                             return
                         raise TipoVagaIncompativelException(cpf_pessoa)
