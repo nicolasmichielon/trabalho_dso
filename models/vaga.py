@@ -1,5 +1,7 @@
+from models.pessoa import Pessoa
+
 class Vaga:
-    def __init__(self, numero: int, pessoa: str, tipo_de_vaga: str, ocupado: bool=False):
+    def __init__(self, numero: int, pessoa: Pessoa, tipo_de_vaga: str, ocupado: bool=False):
         self.__numero = numero
         self.__pessoa = pessoa
         self.__ocupado = ocupado
