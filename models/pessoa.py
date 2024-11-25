@@ -8,8 +8,8 @@ class Pessoa(ABC):
         self.__idade = idade
 
     @abstractmethod
-    def abstract_method(self):
-        None
+    def random_method(self):
+        return None
 
     @property
     def telefone(self):
