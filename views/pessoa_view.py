@@ -63,5 +63,9 @@ class PessoaView():
                 print(e)
         return cpf
 
+    def mostra_linhas(self, linhas: list):
+        for linha in linhas:
+            print(linha)
+
     def pessoa_repetida(self, msg):
         print(msg)

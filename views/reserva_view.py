@@ -91,5 +91,9 @@ class ReservaView:
                 print(e)
         return id
     
+    def mostra_linhas(self, linhas: list):
+        for linha in linhas:
+            print(linha)
+    
     def reserva_removida(self):
         print("Reserva removida com sucesso!")

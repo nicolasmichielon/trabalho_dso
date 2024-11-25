@@ -10,6 +10,10 @@ class OcorrenciaView():
         for linha in linhas:
             print(linha)
 
+    def mostra_linhas(self, linhas: list):
+        for linha in linhas:
+            print(linha)
+
     def get_cpf(self):
         while True:
             try:

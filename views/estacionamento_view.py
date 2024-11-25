@@ -5,6 +5,10 @@ class EstacionamentoView():
     def __init__(self) -> None:
         pass
 
+    def mostra_linhas(self, linhas: list):
+        for linha in linhas:
+            print(linha)
+
     def mostrar_vagas(self, linhas: list):
         for linha in linhas:
             print(linha)
