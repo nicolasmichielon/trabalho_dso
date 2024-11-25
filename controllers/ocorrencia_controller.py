@@ -24,20 +24,22 @@ class OcorrenciaController():
                 if oc.id == ocorrencia.id:
                     return
             self.__ocorrencias.append(ocorrencia)
-            print("Ocorrencia Criada com sucesso")
-            print("-----------------------------")
+            self.__ocorrencia_view.mostra_linhas([
+                "Ocorrencia Criada com sucesso",
+                "-----------------------------"
+            ])
         except MoradorNaoEncontradoException as e:
-            print()
-            print(e)
-            print()
+            self.__ocorrencia_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
         except NenhumSindicoException as e:
-            print()
-            print(e)
-            print()
+            self.__ocorrencia_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
         except:
-            print()
-            print(DadosInvalidosException())
-            print()
+            self.__ocorrencia_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def remover_ocorrencia(self, ocorrencia):
         if len(self.__ocorrencias) > 0 and ocorrencia in self.__ocorrencias:
@@ -91,9 +93,9 @@ class OcorrenciaController():
             else:
                 self.__ocorrencia_view.mostra_ocorrencias(["Nenhuma ocorrência encontrada!"])
         except MoradorNaoEncontradoException as e:
-            print()
-            print(e)
-            print()
+            self.__ocorrencia_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
         
                 
     def busca_ultimo_id(self) -> int:

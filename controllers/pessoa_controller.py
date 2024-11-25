@@ -28,7 +28,10 @@ class PessoaController():
             dados = self.__pessoas_view.get_pessoa()
             sindico = Sindico(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
         except:
-            print(DadosInvalidosException())
+            self.__pessoas_view.mostra_linhas([
+                f"\n{DadosInvalidosException()}\n"
+            ])
+
         self.__sindico = sindico
 
 
@@ -72,9 +75,13 @@ class PessoaController():
             cpf_morador = self.__pessoas_view.get_cpf()
             morador = self.busca_morador_por_cpf(cpf_morador)
         except:
-            print(DadosInvalidosException())
+            self.__pessoas_view.mostra_linhas([
+                f"\n{DadosInvalidosException()}\n"
+            ])
         if morador == None:
-            print(MoradorNaoEncontradoException())
+            self.__pessoas_view.mostra_linhas([
+                f"\n{MoradorNaoEncontradoException()}\n"
+            ])
         elif morador in self.__moradores:
             self.__moradores.remove(morador)
             self.__pessoas_view.mostrar_pessoa([morador])
@@ -84,15 +91,21 @@ class PessoaController():
             cpf_visitante = self.__pessoas_view.get_cpf()
             visitante = self.busca_visitante_por_cpf(cpf_visitante)
         except:
-            print(DadosInvalidosException())
+            self.__pessoas_view.mostra_linhas([
+                f"\n{DadosInvalidosException()}\n"
+            ])
         if visitante == None:
-            print(VisitanteNaoEncontradoException())
+            self.__pessoas_view.mostra_linhas([
+                f"\n{VisitanteNaoEncontradoException()}\n"
+            ])
         if visitante in self.__visitantes:
             self.__visitantes.remove(visitante)
             self.__pessoas_view.mostrar_pessoa([visitante])
 
     def busca_morador_por_cpf(self, cpf) -> Morador:
-        print(f"Procurando pelo CPF: {cpf}...")
+        self.__pessoas_view.mostra_linhas([
+            f"Procurando pelo CPF: {cpf}..."
+        ])
         for morador in self.__moradores:
             if morador.cpf == cpf:
                 self.__pessoas_view.mostrar_pessoa([
@@ -103,7 +116,9 @@ class PessoaController():
         return None
 
     def busca_visitante_por_cpf(self, cpf) -> Visitante:
-        print(f"Procurando pelo CPF: {cpf}...")
+        self.__pessoas_view.mostra_linhas([
+            f"Procurando pelo CPF: {cpf}..."
+        ])
         for visitante in self.__visitantes:
             if visitante.cpf == cpf:
                 self.__pessoas_view.mostrar_pessoa([
@@ -124,7 +139,9 @@ class PessoaController():
         elif cpf == self.get_sindico().cpf:
             return f"Sindico"
         else:
-            print(PessoaNaoCadastradaException())
+            self.__pessoas_view.mostra_linhas([
+                f"\n{PessoaNaoCadastradaException()}\n"
+            ])
 
             
     def get_cpf(self) -> str:
@@ -132,7 +149,10 @@ class PessoaController():
 
     def trocar_sindico(self, novo_sindico: Sindico):
         self.__sindico = novo_sindico
-        print("Sindico trocado com sucesso")
+        self.__pessoas_view.mostra_linhas([
+            f"Sindico trocado com sucesso."
+        ])
+
 
     def display_sindico(self):
         if self.__sindico != None:
@@ -143,9 +163,10 @@ class PessoaController():
                     "-------------------------------",
                 ])
         else:
-            print()
-            print(NenhumSindicoException())
-            print()
+            self.__pessoas_view.mostra_linhas([
+                f"\n{NenhumSindicoException()}\n"
+            ])
+
 
     def display_moradores(self):
         if len(self.__moradores) > 0:
@@ -157,9 +178,10 @@ class PessoaController():
                     "-------------------------------",
                 ])
         else:
-            print()
-            print(NenhumMoradorException())
-            print()
+            self.__pessoas_view.mostra_linhas([
+                f"\n{NenhumMoradorException()}\n"
+            ])
+
 
     def display_visitantes(self):
         if len(self.__visitantes) > 0:
@@ -171,6 +193,7 @@ class PessoaController():
                     "-------------------------------",
                 ])
         else:
-            print()
-            print(NenhumVisitanteException())
-            print()
+            self.__pessoas_view.mostra_linhas([
+                f"\n{NenhumVisitanteException()}\n"
+            ])
+

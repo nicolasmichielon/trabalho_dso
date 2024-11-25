@@ -31,9 +31,10 @@ class ReservaController:
             else:
                 raise NenhumaReservaException()
         except NenhumaReservaException as e:
-            print()
-            print(e)
-            print()
+            self.__reserva_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
+
 
 
     def lista_reservas_por_cpf(self):
@@ -59,17 +60,17 @@ class ReservaController:
             else:
                 raise NenhumaReservaException()
         except MoradorNaoEncontradoException as e:
-            print()
-            print(e)
-            print()
+            self.__reserva_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
         except NenhumaReservaProCPFException as e:
-            print()
-            print(e)
-            print()
+            self.__reserva_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
         except NenhumaReservaException as e:
-            print()
-            print(e)
-            print()
+            self.__reserva_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def adicionar_reserva(self):
         try:
@@ -87,7 +88,9 @@ class ReservaController:
             self.__master_controller.gasto_controller.adicionar_gasto_reserva(reserva.custo, morador)
             self.__reservas.append(reserva)
         except MoradorNaoEncontradoException as e:
-            print(e)
+            self.__reserva_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def remover_reserva(self):
         try:
@@ -99,4 +102,6 @@ class ReservaController:
                     return
             raise IDInvalidoException()
         except IDInvalidoException as e:
-            print(e)
+            self.__reserva_view.mostra_linhas([
+                f"\n{e}\n"
+            ])

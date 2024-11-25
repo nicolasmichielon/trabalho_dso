@@ -25,9 +25,9 @@ class GastoController():
             gasto = Gasto(id, dados.get("valor"), morador, False, dados.get("tipo"))
             self.__gastos.append(gasto)
         except MoradorNaoEncontradoException as e:
-            print()
-            print(e)
-            print()
+            self.__gastos_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def adicionar_gasto_reserva(self, valor, morador):
         if morador == None:
@@ -58,17 +58,17 @@ class GastoController():
                         ])
                         existe_gasto = 1
                 if not existe_gasto:
-                    print()
-                    print(NenhumGastoProCPFException())
-                    print()
+                    self.__gastos_view.mostra_linhas([
+                        f"\n{NenhumGastoProCPFException()}\n"
+                    ])
             else:
-                print()
-                print(NenhumGastoException())
-                print()
+                self.__gastos_view.mostra_linhas([
+                   f"\n{NenhumGastoException()}\n"
+                ])
         except MoradorNaoEncontradoException as e:
-            print()
-            print(e)
-            print()
+            self.__gastos_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def listar_gastos(self):
         try:
@@ -84,9 +84,9 @@ class GastoController():
             else:
                 raise NenhumGastoException()
         except NenhumGastoException as e:
-            print()
-            print(e)
-            print()
+            self.__gastos_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def total_de_gastos_do_morador(self, cpf) -> int:
         try:
@@ -104,13 +104,13 @@ class GastoController():
                     "---------------------"
                 ])
             else:
-                print()
-                print(NenhumGastoException())
-                print()
+                self.__gastos_view.mostra_linhas([
+                    f"\n{NenhumGastoException()}\n"
+                ])
         except MoradorNaoEncontradoException as e:
-            print()
-            print(e)
-            print()
+            self.__gastos_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def gerar_relatorio(self):
         try:
@@ -128,13 +128,13 @@ class GastoController():
                     "---------------------"
                 ])
             else:
-                print()
-                print(NenhumGastoException())
-                print()
+                self.__gastos_view.mostra_linhas([
+                    f"\n{NenhumGastoException}\n"
+                ])
         except Exception as e:
-            print()
-            print(e)
-            print()
+            self.__gastos_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def pagar_gasto(self):
         try:
@@ -157,8 +157,8 @@ class GastoController():
                 self.__gastos[gasto_id - 1].pago = True
                 self.__gastos_view.gasto_pago()
         except IDInvalidoException as e:
-            print()
-            print(e)
-            print()
+            self.__gastos_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
 

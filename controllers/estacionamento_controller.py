@@ -49,30 +49,41 @@ class EstacionamentoController():
                         else:
                             v.ocupado = True
                             v.pessoa = pessoa
-                            print("Vaga ocupada")
+                            self.__estacionamento_view.mostra_linhas([
+                                "Vaga ocupada."
+                            ])
                             return
                         raise TipoVagaIncompativelException(cpf_pessoa)
             raise TipoVagaIncompativelException(cpf_pessoa)
         except ValueError as e:
-            print(e)
+            self.__estacionamento_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
         except TipoVagaIncompativelException as e:
-            print(e)
+            self.__estacionamento_view.mostra_linhas([
+                f"\n{e}\n"
+            ])
 
     def desocupar_vaga(self):
         try:
             cpf_pessoa = self.__estacionamento_view.get_cpf()
             num_vaga = self.__estacionamento_view.get_vaga()
             for v in self.__vagas:
-                if v.numero == num_vaga and cpf_pessoa == v.pessoa:
+                if v.numero == num_vaga and cpf_pessoa == v.pessoa.cpf:
                     if v.ocupado:
                         v.ocupado = False
-                        print("Vaga desocupada")
+                        self.__estacionamento_view.mostra_linhas([
+                            "Vaga desocupada."
+                        ])
+
                         return
                     else:
                         raise ValueError
             raise ValueError
         except ValueError:
-            print("Esta vaga nao esta ocupada")
+            self.__estacionamento_view.mostra_linhas([
+                "Essa vaga não está ocupada."
+            ])
 
     def display_vaga(self):
         try:
@@ -80,17 +91,18 @@ class EstacionamentoController():
             for v in self.__vagas:
                 if v.numero == num_vaga:
                     if v.ocupado:
-                        pessoa = self.__master_controller.pessoa_controller.busca_morador_por_cpf(int(v.pessoa))
-                        pessoa = pessoa.nome
+                        pessoa_to_display = v.pessoa.nome
                     else:
-                        pessoa = "Ninguem"
+                        pessoa_to_display = "Ninguém"
                     self.__estacionamento_view.mostrar_vagas([
                         "------------------------------------",
                         f"Vaga {v.numero}",
                         f"Ocupado: {v.ocupado}",
                         f"Vaga de {v.tipo_de_vaga}",
-                        f"Ocupado por {pessoa}",
+                        f"Ocupado por {pessoa_to_display}",
                         "-------------------------------------"
                     ])
         except:
-            print("Essa vaga nao existe")
+            self.__estacionamento_view.mostra_linhas([
+                "Essa vaga não existe."
+            ])
