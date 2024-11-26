@@ -6,8 +6,8 @@ class MasterView:
         self.selected_value = None
 
     def mostra_opcoes(self, linhas):
-        layout = [[sg.Text(line)] for line in linhas]
-        layout.append([sg.Listbox(values=linhas[1:], size=(30, 6), key='-LIST-', enable_events=True)])
+        layout = []
+        layout.append([sg.Listbox(values=linhas[1:], size=(50, 10), key='-LIST-', enable_events=True)])
         layout.append([sg.Button('Submit'), sg.Button('Cancel')])
         self.window = sg.Window('Master View', layout)
 

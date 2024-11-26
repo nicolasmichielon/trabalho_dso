@@ -11,6 +11,7 @@ def run_gui():
         master_view.mostra_opcoes(options)
         selected_value = master_view.solicitar_resposta()
         if selected_value is not None:
+            print("nicholas")
             switch = master_controller.process_selection(selected_value)  # Process the selected option
         else:
             switch = False

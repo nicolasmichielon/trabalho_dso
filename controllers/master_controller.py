@@ -31,7 +31,7 @@ class MasterController():
             self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == "0: Sair":
-            return False
+            return self.menuPrincipal()
         elif entrada == "1: Menu de Pessoas":
             return self.menuPessoa()
         elif entrada == "2: Menu de Estacionamento":
@@ -49,6 +49,20 @@ class MasterController():
     def process_selection(self, selection):
         # This method is no longer needed as the logic is handled in iniciarSistema
         pass
+
+    def menuPrincipal(self):
+        self.__master_view.mostra_opcoes([
+            "================== MENU DE PESSOAS ==================",
+            "0: Retornar ao Menu Principal",
+            "1: Adicionar Morador",
+            "2: Adicionar Visitante",
+            "3: Adicionar Sindico",
+            "4: Visualizar todos os moradores",
+            "5: Visualizar todos os visitantes",
+            "6: Visualizar sindico",
+            "7: Remover Morador por CPF",
+            "8: Remover Visitante por CPF",
+        ])
 
     def menuPessoa(self):
         entrada = None
