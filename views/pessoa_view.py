@@ -1,3 +1,4 @@
+import PySimpleGUI as sg
 from exceptions.cpf_invalido_exception import CPFInvalidoException
 from exceptions.idade_invalida_exception import IdadeInvalidaException
 from exceptions.telefone_invalido_exception import TelefoneInvalidoException
@@ -8,64 +9,82 @@ class PessoaView():
         pass
 
     def mostrar_pessoa(self, linhas: list):
-        for linha in linhas:
-            print(linha)
+        layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
+        window = sg.Window('Mostrar Pessoa', layout)
+        event = window.read()
+        if event == sg.WIN_CLOSED or event == 'Sair':
+            window.close()
+            return None
 
     def get_pessoa(self) -> dict:
+        layout = [
+            [sg.Text('Nome:'), sg.InputText(key='nome')],
+            [sg.Text('Telefone:'), sg.InputText(key='telefone')],
+            [sg.Text('CPF:'), sg.InputText(key='cpf')],
+            [sg.Text('Idade:'), sg.InputText(key='idade')],
+            [sg.Button('Enviar')]
+        ]
+        window = sg.Window('Cadastro de Pessoa', layout)
+
         while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Sair':
+                window.close()
+                return None
+
             try:
-                nome = input("Nome: ")
+                nome = values['nome']
                 if len(nome) < 2:
                     raise NomeInvalidoException()
-                break
-            except NomeInvalidoException as e:
-                print(e)
-        
-        while True:
-            try:
-                telefone = input("Telefone: ")
+                
+                telefone = values['telefone']
                 if len(telefone) < 11 or not telefone.isdigit():
                     raise TelefoneInvalidoException()
-                break
-            except TelefoneInvalidoException as e:
-                print(e)
-
-        while True:
-            try:
-                cpf = input("CPF: ")
+                
+                cpf = values['cpf']
                 if len(cpf) != 11 or not cpf.isdigit():
                     raise CPFInvalidoException()
                 cpf = int(cpf)
-                break
-            except CPFInvalidoException as e:
-                print(e)
-        
-        while True:
-            try:
-                idade = int(input("Idade: "))
+                
+                idade = int(values['idade'])
                 if idade > 130 or idade < 0:
                     raise IdadeInvalidaException()
-                break
-            except IdadeInvalidaException as e:
-                print(e)
-        
-        return {"nome": nome, "telefone": telefone, "cpf": cpf, "idade": idade}
+                
+                window.close()
+                return {"nome": nome, "telefone": telefone, "cpf": cpf, "idade": idade}
+            except (NomeInvalidoException, TelefoneInvalidoException, CPFInvalidoException, IdadeInvalidaException) as e:
+                sg.popup(str(e))
 
     def get_cpf(self) -> int:
+        layout = [
+            [sg.Text('CPF:'), sg.InputText(key='cpf')],
+            [sg.Button('Enviar')]
+        ]
+        window = sg.Window('Entrada de CPF', layout)
+
         while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Cancelar':
+                window.close()
+                return None
+
             try:
-                cpf = input("CPF: ")
+                cpf = values['cpf']
                 if len(cpf) != 11 or not cpf.isdigit():
                     raise CPFInvalidoException()
                 cpf = int(cpf)
-                break
+                window.close()
+                return cpf
             except CPFInvalidoException as e:
-                print(e)
-        return cpf
+                sg.popup(str(e))
 
     def mostra_linhas(self, linhas: list):
-        for linha in linhas:
-            print(linha)
+        layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
+        window = sg.Window('Mostrar Linhas', layout)
+        event = window.read()
+        if event == sg.WIN_CLOSED or event == 'Sair':
+            window.close()
+            return None
 
     def pessoa_repetida(self, msg):
-        print(msg)
+        sg.popup(msg)

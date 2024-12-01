@@ -84,7 +84,7 @@ class PessoaController():
             ])
         elif morador in self.__moradores:
             self.__moradores.remove(morador)
-            self.__pessoas_view.mostrar_pessoa([morador])
+            self.__pessoas_view.mostra_linhas([f"Morador {morador.nome} do CPF {morador.cpf} foi removido com sucesso!"])
 
     def remover_visitante(self):
         try:
@@ -108,10 +108,6 @@ class PessoaController():
         ])
         for morador in self.__moradores:
             if morador.cpf == cpf:
-                self.__pessoas_view.mostrar_pessoa([
-                    "-------------------------------",
-                    f"Nome: {morador.nome}",
-                    "-------------------------------"])
                 return morador
         return None
 

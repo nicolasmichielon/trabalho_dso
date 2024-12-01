@@ -15,7 +15,7 @@ class MasterController():
         self.__reserva_controller = ReservaController(self)
         self.__master_view = MasterView()
 
-    def iniciarSistema(self):
+    def menuPrincipal(self):
         self.__master_view.mostra_opcoes([
             "================== MENU PRINCIPAL ==================",
             "0: Sair",
@@ -31,7 +31,8 @@ class MasterController():
             self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == "0: Sair":
-            return self.menuPrincipal()
+            self.__master_view.stop()
+            return True
         elif entrada == "1: Menu de Pessoas":
             return self.menuPessoa()
         elif entrada == "2: Menu de Estacionamento":
@@ -43,26 +44,8 @@ class MasterController():
         elif entrada == "5: Menu de Reservas":
             return self.menuReserva()
         else:
-            self.__master_view.mostra_erro(EntradaInvalidaException)
+            self.__master_view.stop()
             return True
-
-    def process_selection(self, selection):
-        # This method is no longer needed as the logic is handled in iniciarSistema
-        pass
-
-    def menuPrincipal(self):
-        self.__master_view.mostra_opcoes([
-            "================== MENU DE PESSOAS ==================",
-            "0: Retornar ao Menu Principal",
-            "1: Adicionar Morador",
-            "2: Adicionar Visitante",
-            "3: Adicionar Sindico",
-            "4: Visualizar todos os moradores",
-            "5: Visualizar todos os visitantes",
-            "6: Visualizar sindico",
-            "7: Remover Morador por CPF",
-            "8: Remover Visitante por CPF",
-        ])
 
     def menuPessoa(self):
         entrada = None
@@ -84,7 +67,8 @@ class MasterController():
             self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == "0: Retornar ao Menu Principal":
-            return False
+            self.menuPrincipal()
+            return True
         elif entrada == "1: Adicionar Morador":
             self.__pessoa_controller.adicionar_morador()
         elif entrada == "2: Adicionar Visitante":
@@ -102,7 +86,9 @@ class MasterController():
         elif entrada == "8: Remover Visitante por CPF":
             self.__pessoa_controller.remover_visitante()
         else:
-            self.__master_view.mostra_erro(EntradaInvalidaException)
+            self.__master_view.stop()
+            return True
+        self.menuPessoa()
         return True
 
     def menuEstacionamento(self):
@@ -121,7 +107,8 @@ class MasterController():
             self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == "0: Retornar ao Menu Principal":
-            return False
+            self.menuPrincipal()
+            return True
         elif entrada == "1: Visualizar estacionamento":
             self.__estacionamento_controller.display_vagas()
         elif entrada == "2: Ocupar vaga":
@@ -131,7 +118,9 @@ class MasterController():
         elif entrada == "4: Visualizar vaga":
             self.__estacionamento_controller.display_vaga()
         else:
-            self.__master_view.mostra_erro(EntradaInvalidaException)
+            self.__master_view.stop()
+            return True
+        self.menuEstacionamento()
         return True
 
     def menuOcorrencia(self):
@@ -149,7 +138,8 @@ class MasterController():
             self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == "0: Retornar ao Menu Principal":
-            return False
+            self.menuPrincipal()
+            return True
         elif entrada == "1: Criar Ocorrencia":
             self.__ocorrencia_controller.adicionar_ocorrencia()
         elif entrada == "2: Buscar Ocorrencia por CPF de morador":
@@ -157,7 +147,9 @@ class MasterController():
         elif entrada == "3: Visualizar todas as ocorrências":
             self.__ocorrencia_controller.busca_ocorrencias()
         else:
-            self.__master_view.mostra_erro(EntradaInvalidaException)
+            self.__master_view.stop()
+            return True
+        self.menuOcorrencia()
         return True
 
     def menuGasto(self):
@@ -177,7 +169,8 @@ class MasterController():
             self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == "0: Retornar ao Menu Principal":
-            return False
+            self.menuPrincipal()
+            return True
         elif entrada == "1: Cadastrar gasto":
             self.__gasto_controller.adicionar_gasto()
         elif entrada == "2: Visualizar todos os gastos":
@@ -189,7 +182,9 @@ class MasterController():
         elif entrada == "5: Pagar gasto":
             self.__gasto_controller.pagar_gasto()
         else:
-            self.__master_view.mostra_erro(EntradaInvalidaException)
+            self.__master_view.stop()
+            return True
+        self.menuGasto()
         return True
 
     def menuReserva(self):
@@ -208,7 +203,8 @@ class MasterController():
             self.__master_view.mostra_erro(EntradaInvalidaException)
             return True
         if entrada == "0: Retornar ao Menu Principal":
-            return False
+            self.menuPrincipal()
+            return True
         elif entrada == "1: Cadastrar reserva":
             self.__reserva_controller.adicionar_reserva()
         elif entrada == "2: Visualizar todas as reservas":
@@ -218,7 +214,9 @@ class MasterController():
         elif entrada == "4: Remover reserva por ID":
             self.__reserva_controller.remover_reserva()
         else:
-            self.__master_view.mostra_erro(EntradaInvalidaException)
+            self.__master_view.stop()
+            return True
+        self.menuReserva()
         return True
 
     @property

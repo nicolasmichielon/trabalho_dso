@@ -8,16 +8,16 @@ class MasterView:
     def mostra_opcoes(self, linhas):
         layout = []
         layout.append([sg.Listbox(values=linhas[1:], size=(50, 10), key='-LIST-', enable_events=True)])
-        layout.append([sg.Button('Submit'), sg.Button('Cancel')])
+        layout.append([sg.Button('Selecionar'), sg.Button('Sair')])
         self.window = sg.Window('Master View', layout)
 
     def solicitar_resposta(self):
         while True:
             event, values = self.window.read()
-            if event == sg.WIN_CLOSED or event == 'Cancel':
+            if event == sg.WIN_CLOSED or event == 'Sair':
                 self.window.close()
                 return None
-            if event == 'Submit':
+            if event == 'Selecionar':
                 if not values['-LIST-']:
                     sg.popup_error("Nenhuma opção selecionada")
                 else:
