@@ -11,10 +11,9 @@ class PessoaView():
     def mostrar_pessoa(self, linhas: list):
         layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
         window = sg.Window('Mostrar Pessoa', layout)
-        event = window.read()
-        if event == sg.WIN_CLOSED or event == 'Sair':
-            window.close()
-            return None
+        event, values = window.read()
+        window.close()
+        return None
 
     def get_pessoa(self) -> dict:
         layout = [
@@ -81,10 +80,9 @@ class PessoaView():
     def mostra_linhas(self, linhas: list):
         layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
         window = sg.Window('Mostrar Linhas', layout)
-        event = window.read()
-        if event == sg.WIN_CLOSED or event == 'Sair':
-            window.close()
-            return None
+        event, values = window.read()
+        window.close()
+        return None
 
     def pessoa_repetida(self, msg):
         sg.popup(msg)

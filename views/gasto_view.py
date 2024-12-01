@@ -13,9 +13,8 @@ class GastoView:
         layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
         window = sg.Window('Mostrar Gasto', layout)
         event, values = window.read()
-        if event == sg.WIN_CLOSED or event == 'Cancelar':
-            window.close()
-            return None
+        window.close()
+        return None
 
     def get_gasto(self) -> dict:
         layout = [
@@ -96,9 +95,8 @@ class GastoView:
         layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
         window = sg.Window('Mostrar Linhas', layout)
         event, values = window.read()
-        if event == sg.WIN_CLOSED or event == 'Cancelar':
-            window.close()
-            return None
+        window.close()
+        return None
 
     def gasto_pago(self):
         sg.popup("Gasto pago com sucesso!")

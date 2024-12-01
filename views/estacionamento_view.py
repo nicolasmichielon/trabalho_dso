@@ -1,5 +1,6 @@
 from exceptions.vaga_invalida_exception import VagaInvalidaException
 from exceptions.cpf_invalido_exception import CPFInvalidoException
+import PySimpleGUI as sg
 
 class EstacionamentoView():
     def __init__(self) -> None:
@@ -8,18 +9,16 @@ class EstacionamentoView():
     def mostra_linhas(self, linhas: list):
         layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
         window = sg.Window('Mostrar Linhas', layout)
-        event = window.read()
-        if event == sg.WIN_CLOSED or event == 'Sair':
-            window.close()
-            return None
+        event, values = window.read()
+        window.close()
+        return None
 
     def mostrar_vagas(self, linhas: list):
         layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
         window = sg.Window('Mostrar Vagas', layout)
-        event = window.read()
-        if event == sg.WIN_CLOSED or event == 'Sair':
-            window.close()
-            return None
+        event, values = window.read()
+        window.close()
+        return None
 
     def get_vaga(self) -> int:
         layout = [

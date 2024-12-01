@@ -116,6 +116,7 @@ class ReservaView:
         window = sg.Window('Mostrar Linhas', layout)
         event, values = window.read()
         window.close()
+        return None
 
     def reserva_removida(self):
         sg.popup("Reserva removida com sucesso!")
