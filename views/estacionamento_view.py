@@ -6,31 +6,62 @@ class EstacionamentoView():
         pass
 
     def mostra_linhas(self, linhas: list):
-        for linha in linhas:
-            print(linha)
+        layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
+        window = sg.Window('Mostrar Linhas', layout)
+        event = window.read()
+        if event == sg.WIN_CLOSED or event == 'Sair':
+            window.close()
+            return None
 
     def mostrar_vagas(self, linhas: list):
-        for linha in linhas:
-            print(linha)
+        layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
+        window = sg.Window('Mostrar Vagas', layout)
+        event = window.read()
+        if event == sg.WIN_CLOSED or event == 'Sair':
+            window.close()
+            return None
 
     def get_vaga(self) -> int:
+        layout = [
+            [sg.Text('Vaga:'), sg.InputText(key='vaga')],
+            [sg.Button('Enviar')]
+        ]
+        window = sg.Window('Entrada de Vaga', layout)
+
         while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Cancelar':
+                window.close()
+                return None
+
             try:
-                vaga = int(input("Vaga: "))
-                if not vaga >= 1 and not vaga <= 15:
+                vaga = int(values['vaga'])
+                if not (1 <= vaga <= 15):
                     raise VagaInvalidaException()
-                break
-            except VagaInvalidaException as e:
-                print(e)
-        return vaga
-    
+                window.close()
+                return vaga
+            except (ValueError, VagaInvalidaException) as e:
+                sg.popup(str(e))
+
     def get_cpf(self) -> int:
+        layout = [
+            [sg.Text('CPF:'), sg.InputText(key='cpf')],
+            [sg.Button('Enviar')]
+        ]
+        window = sg.Window('Entrada de CPF', layout)
+
         while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Cancelar':
+                window.close()
+                return None
+
             try:
-                cpf = input("CPF: ")
+                cpf = values['cpf']
                 if len(cpf) != 11 or not cpf.isdigit():
                     raise CPFInvalidoException()
-                break
+                cpf = int(cpf)
+                window.close()
+                return cpf
             except CPFInvalidoException as e:
-                print(e)
-        return int(cpf)
+                sg.popup(str(e))
