@@ -49,7 +49,7 @@ class GastoController():
                 existe_gasto = 0
                 for gasto in self.__gastos:
                     if gasto.morador.cpf == cpf:
-                        self.__gastos_view.mostrar_gastos([
+                        self.__gastos_view.mostrar_gasto([
                             "--------------------------",
                             f"ID: {gasto.id}", 
                             f"Valor: {gasto.valor}",
@@ -74,7 +74,7 @@ class GastoController():
         try:
             if len(self.__gastos) > 0:
                 for gasto in self.__gastos:
-                    self.__gastos_view.mostrar_gastos([
+                    self.__gastos_view.mostrar_gasto([
                         "---------------------",
                         f"CPF: {gasto.morador.cpf}",
                         f"Valor: {gasto.valor}",
@@ -98,7 +98,7 @@ class GastoController():
                 for gasto in self.__gastos:
                     if gasto.morador.cpf == cpf:
                         total += gasto.valor
-                self.__gastos_view.mostrar_gastos([
+                self.__gastos_view.mostrar_gasto([
                     "---------------------",
                     f"Gastos totais: {total}"
                     "---------------------"
@@ -120,7 +120,7 @@ class GastoController():
                 quantidade_moradores = len(self.__master_controller.pessoa_controller.moradores)
                 media_gastos = total_gastos / quantidade_moradores
 
-                self.__gastos_view.mostrar_gastos([
+                self.__gastos_view.mostrar_gasto([
                     "---------------------",
                     f"Total de gastos gerados no condomínio: R${total_gastos}",
                     f"Quantidade de gastos no condomínio: {quantidade_gastos}",
@@ -142,7 +142,7 @@ class GastoController():
             ids_validos = []
             for gasto in self.__gastos:
                 if cpf == gasto.morador.cpf and gasto.pago == False:
-                    self.__gastos_view.mostrar_gastos([
+                    self.__gastos_view.mostrar_gasto([
                         "--------------------------",
                         f"ID: {gasto.id}", 
                         f"Valor: {gasto.valor}",

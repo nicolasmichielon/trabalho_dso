@@ -1,3 +1,4 @@
+import PySimpleGUI as sg
 from exceptions.cpf_invalido_exception import CPFInvalidoException
 from exceptions.data_invalida_exception import DataInvalidaException
 from exceptions.espaco_invalido_exception import EspacoInvalidoException
@@ -9,91 +10,112 @@ class ReservaView:
         pass
 
     def mostraReserva(self, linhas: list):
-        for linha in linhas:
-            print(linha)
+        layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
+        window = sg.Window('Mostrar Reserva', layout)
+        event, values = window.read()
+        window.close()
 
     def get_reserva(self) -> dict:
+        layout = [
+            [sg.Text('CPF do solicitante:'), sg.InputText(key='cpf_solicitante')],
+            [sg.Text('Data da reserva:'), sg.InputText(key='data_reserva')],
+            [sg.Text('Hora de início:'), sg.InputText(key='hora_inicio')],
+            [sg.Text('Hora de fim:'), sg.InputText(key='hora_fim')],
+            [sg.Text('Espaço:'), sg.InputText(key='espaco')],
+            [sg.Button('Enviar')]
+        ]
+        window = sg.Window('Cadastro de Reserva', layout)
+
         while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Sair':
+                window.close()
+                return None
+
             try:
-                cpf_solicitante = input("CPF do solicitante: ")
+                cpf_solicitante = values['cpf_solicitante']
                 if len(cpf_solicitante) != 11 or not cpf_solicitante.isdigit():
                     raise CPFInvalidoException()
                 cpf_solicitante = int(cpf_solicitante)
-                break
-            except CPFInvalidoException as e:
-                print(e)
-
-        while True:
-            try:
-                data_reserva = input("Data da reserva: ")
+                
+                data_reserva = values['data_reserva']
                 if len(data_reserva) < 10:
                     raise DataInvalidaException()
-                break
-            except DataInvalidaException as e:
-                print(e)
-
-        while True:
-            try:
-                hora_inicio = int(input("Hora de início: "))
+                
+                hora_inicio = int(values['hora_inicio'])
                 if not (hora_inicio <= 24 and hora_inicio >= 0):
                     raise HorarioInvalidoException()
-                break
-            except HorarioInvalidoException as e:
-                print(e)
-
-        while True:
-            try:
-                hora_fim = int(input("Hora de fim: "))
+                
+                hora_fim = int(values['hora_fim'])
                 if not (hora_fim <= 24 and hora_fim >= 0):
                     raise HorarioInvalidoException()
-                break
-            except HorarioInvalidoException as e:
-                print(e)
-
-        while True:
-            try:
-                espaco = input("Espaço: ")
+                
+                espaco = values['espaco']
                 if len(espaco) < 5:
                     raise EspacoInvalidoException()
-                break
-            except EspacoInvalidoException as e:
-                print(e)
+                
+                window.close()
+                return {
+                    "cpf_solicitante": cpf_solicitante,
+                    "data_reserva": data_reserva,
+                    "hora_inicio": hora_inicio,
+                    "hora_fim": hora_fim,
+                    "espaco": espaco
+                }
+            except (CPFInvalidoException, DataInvalidaException, HorarioInvalidoException, EspacoInvalidoException) as e:
+                sg.popup(str(e))
 
-        return {
-            "cpf_solicitante": cpf_solicitante,
-            "data_reserva": data_reserva,
-            "hora_inicio": hora_inicio,
-            "hora_fim": hora_fim,
-            "espaco": espaco
-        }
-    
     def get_cpf(self):
+        layout = [
+            [sg.Text('CPF:'), sg.InputText(key='cpf')],
+            [sg.Button('Enviar')]
+        ]
+        window = sg.Window('Entrada de CPF', layout)
+
         while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Cancelar':
+                window.close()
+                return None
+
             try:
-                cpf = int(input("CPF: "))
+                cpf = values['cpf']
                 if len(cpf) != 11 or not cpf.isdigit():
                     raise CPFInvalidoException()
                 cpf = int(cpf)
-                break
+                window.close()
+                return cpf
             except CPFInvalidoException as e:
-                print(e)
-        return cpf
-    
+                sg.popup(str(e))
+
     def get_reserva_id(self):
+        layout = [
+            [sg.Text('ID da reserva a ser deletada:'), sg.InputText(key='id')],
+            [sg.Button('Enviar')]
+        ]
+        window = sg.Window('Entrada de ID da Reserva', layout)
+
         while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Cancelar':
+                window.close()
+                return None
+
             try:
-                id = input("ID da reserva a ser deletada: ")
+                id = values['id']
                 if not id.isdigit():
                     raise IDInvalidoException()
                 id = int(id)
-                break
+                window.close()
+                return id
             except IDInvalidoException as e:
-                print(e)
-        return id
-    
+                sg.popup(str(e))
+
     def mostra_linhas(self, linhas: list):
-        for linha in linhas:
-            print(linha)
-    
+        layout = [[sg.Text(linha)] for linha in linhas] + [[sg.Button('Ok')]]
+        window = sg.Window('Mostrar Linhas', layout)
+        event, values = window.read()
+        window.close()
+
     def reserva_removida(self):
-        print("Reserva removida com sucesso!")
+        sg.popup("Reserva removida com sucesso!")
