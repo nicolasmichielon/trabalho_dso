@@ -4,124 +4,78 @@ from models.sindico import Sindico
 from models.visitante import Visitante
 from exceptions.pessoa_repetida_exception import PessoaRepetidaException
 from exceptions.dados_invalidos_exception import DadosInvalidosException
-from exceptions.morador_nao_encontrado_exception import MoradorNaoEncontradoException
-from exceptions.visitante_nao_encontrado_exception import VisitanteNaoEncontradoException
 from exceptions.pessoa_nao_cadastrada_exception import PessoaNaoCadastradaException
 from exceptions.nenhum_morador_exception import NenhumMoradorException
 from exceptions.nenhum_visitante_exception import NenhumVisitanteException
 from exceptions.nenhum_sindico_exception import NenhumSindicoException
+from daos.pessoa_dao import PessoaDAO
 
 class PessoaController():
     def __init__(self, master_controller):
         self.__master_controller = master_controller
         self.__pessoas_view = PessoaView()
-        self.__moradores = []
-        self.__visitantes = []
-        self.__sindico = None
+        self.__pessoa_dao = PessoaDAO()
 
     @property
     def moradores(self):
-        return self.__moradores
+        return self.__pessoa_dao.get_moradores()
 
     def adicionar_sindico(self):
         try:
             dados = self.__pessoas_view.get_pessoa()
             sindico = Sindico(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
+            self.__pessoa_dao.set_sindico(sindico)
         except:
             self.__pessoas_view.mostra_linhas([
                 f"\n{DadosInvalidosException()}\n"
             ])
 
-        self.__sindico = sindico
-
-
     def adicionar_morador(self):
         try:
             dados = self.__pessoas_view.get_pessoa()
             morador = Morador(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
-            cpfs = []
-            for m in self.__moradores:
-                cpfs.append(m.cpf)
-            for v in self.__visitantes:
-                cpfs.append(v.cpf)
-            if morador.cpf not in cpfs:
-                self.__moradores.append(morador)
-                self.__pessoas_view.mostrar_pessoa([f"O morador {morador.nome} com o CPF {morador.cpf} foi adicionado com sucesso!"])
-            else:
-                raise PessoaRepetidaException(morador.cpf)
+            self.__pessoa_dao.adicionar_pessoa(morador)
+            self.__pessoas_view.mostrar_pessoa([f"O morador {morador.nome} com o CPF {morador.cpf} foi adicionado com sucesso!"])
         except PessoaRepetidaException as e:
             self.__pessoas_view.pessoa_repetida(e)
-
 
     def adicionar_visitante(self):
         try:
             dados = self.__pessoas_view.get_pessoa()
             visitante = Visitante(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
-            cpfs = []
-            for morador in self.__moradores:
-                cpfs.append(morador.cpf)
-            for visitante in self.__visitantes:
-                cpfs.append(visitante.cpf)
-            if visitante.cpf not in cpfs:
-                self.__visitantes.append(visitante)
-                self.__pessoas_view.mostrar_pessoa([f"O visitante {visitante.nome} com o CPF {visitante.cpf} foi adicionado com sucesso!"])
-            else:
-                raise PessoaRepetidaException(visitante.cpf)
+            self.__pessoa_dao.adicionar_pessoa(visitante)
+            self.__pessoas_view.mostrar_pessoa([f"O visitante {visitante.nome} com o CPF {visitante.cpf} foi adicionado com sucesso!"])
         except PessoaRepetidaException as e:
             self.__pessoas_view.pessoa_repetida(e)
 
     def remover_morador(self):
         try:
             cpf_morador = self.__pessoas_view.get_cpf()
-            morador = self.busca_morador_por_cpf(cpf_morador)
+            self.__pessoa_dao.remover_pessoa(cpf_morador, Morador)
+            self.__pessoas_view.mostra_linhas([f"Morador com o CPF {cpf_morador} foi removido com sucesso!"])
         except:
             self.__pessoas_view.mostra_linhas([
                 f"\n{DadosInvalidosException()}\n"
             ])
-        if morador == None:
-            self.__pessoas_view.mostra_linhas([
-                f"\n{MoradorNaoEncontradoException()}\n"
-            ])
-        elif morador in self.__moradores:
-            self.__moradores.remove(morador)
-            self.__pessoas_view.mostra_linhas([f"Morador {morador.nome} com o CPF {morador.cpf} foi removido com sucesso!"])
 
     def remover_visitante(self):
         try:
             cpf_visitante = self.__pessoas_view.get_cpf()
-            visitante = self.busca_visitante_por_cpf(cpf_visitante)
+            self.__pessoa_dao.remover_pessoa(cpf_visitante, Visitante)
+            self.__pessoas_view.mostra_linhas([f"Visitante com o CPF {cpf_visitante} foi removido com sucesso!"])
         except:
             self.__pessoas_view.mostra_linhas([
                 f"\n{DadosInvalidosException()}\n"
             ])
-        if visitante == None:
-            self.__pessoas_view.mostra_linhas([
-                f"\n{VisitanteNaoEncontradoException()}\n"
-            ])
-        if visitante in self.__visitantes:
-            self.__visitantes.remove(visitante)
-            self.__pessoas_view.mostrar_pessoa([f"O visitante {visitante.nome} com o CPF {visitante.cpf} foi removido com sucesso!"])
 
     def busca_morador_por_cpf(self, cpf) -> Morador:
-        self.__pessoas_view.mostra_linhas([
-            f"Procurando pelo CPF: {cpf}..."
-        ])
-        for morador in self.__moradores:
-            if morador.cpf == cpf:
-                return morador
-        return None
+        return self.__pessoa_dao.buscar_pessoa_por_cpf(cpf, Morador)
 
     def busca_visitante_por_cpf(self, cpf) -> Visitante:
-        self.__pessoas_view.mostra_linhas([
-            f"Procurando pelo CPF: {cpf}..."
-        ])
-        for visitante in self.__visitantes:
-            if visitante.cpf == cpf:
-                return visitante
-        return None
-            
+        return self.__pessoa_dao.buscar_pessoa_por_cpf(cpf, Visitante)
+
     def get_sindico(self) -> Sindico:
-        return self.__sindico
+        return self.__pessoa_dao.get_sindico()
 
     def get_tipo_de_pessoa(self, cpf: int) -> str:
         if self.busca_morador_por_cpf(cpf):
@@ -135,34 +89,30 @@ class PessoaController():
                 f"\n{PessoaNaoCadastradaException()}\n"
             ])
 
-            
-    def get_cpf(self) -> str:
-        return self.__pessoas_view.get_cpf()
-
     def trocar_sindico(self, novo_sindico: Sindico):
-        self.__sindico = novo_sindico
+        self.__pessoa_dao.set_sindico(novo_sindico)
         self.__pessoas_view.mostra_linhas([
             f"Sindico trocado com sucesso."
         ])
 
-
     def display_sindico(self):
-        if self.__sindico != None:
+        sindico = self.__pessoa_dao.get_sindico()
+        if sindico:
             self.__pessoas_view.mostrar_pessoa([
-                    "-------------------------------",
-                    f"Nome: {self.__sindico.nome}",
-                    f"CPF: {self.__sindico.cpf}",
-                    "-------------------------------",
-                ])
+                "-------------------------------",
+                f"Nome: {sindico.nome}",
+                f"CPF: {sindico.cpf}",
+                "-------------------------------",
+            ])
         else:
             self.__pessoas_view.mostra_linhas([
                 f"\n{NenhumSindicoException()}\n"
             ])
 
-
     def display_moradores(self):
-        if len(self.__moradores) > 0:
-            for morador in self.__moradores:
+        moradores = self.__pessoa_dao.get_moradores()
+        if moradores:
+            for morador in moradores:
                 self.__pessoas_view.mostrar_pessoa([
                     "-------------------------------",
                     f"Nome: {morador.nome}",
@@ -174,10 +124,10 @@ class PessoaController():
                 f"\n{NenhumMoradorException()}\n"
             ])
 
-
     def display_visitantes(self):
-        if len(self.__visitantes) > 0:
-            for visitante in self.__visitantes:
+        visitantes = self.__pessoa_dao.get_visitantes()
+        if visitantes:
+            for visitante in visitantes:
                 self.__pessoas_view.mostrar_pessoa([
                     "-------------------------------",
                     f"Nome: {visitante.nome}",
