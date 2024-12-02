@@ -15,7 +15,7 @@ class GastoController():
     def adicionar_gasto(self):
         try:
             dados = self.__gastos_view.get_gasto()
-            morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(self.__gastos_view.get_cpf())
+            morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(self.__master_controller.pessoa_controller.get_cpf())
             if morador == None:
                 raise MoradorNaoEncontradoException()
             if len(self.__gastos) == 0:
@@ -138,7 +138,7 @@ class GastoController():
 
     def pagar_gasto(self):
         try:
-            cpf = self.__gastos_view.get_cpf()
+            cpf = self.__master_controller.pessoa_controller.get_cpf()
             ids_validos = []
             for gasto in self.__gastos:
                 if cpf == gasto.morador.cpf and gasto.pago == False:

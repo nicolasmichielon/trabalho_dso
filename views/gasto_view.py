@@ -45,29 +45,6 @@ class GastoView:
             except (DescricaoInvalidaException, ValorInvalidoException) as e:
                 sg.popup(str(e))
 
-    def get_cpf(self):
-        layout = [
-            [sg.Text('CPF:'), sg.InputText(key='cpf')],
-            [sg.Button('Enviar')]
-        ]
-        window = sg.Window('Entrada de CPF', layout)
-
-        while True:
-            event, values = window.read()
-            if event == sg.WIN_CLOSED or event == 'Cancelar':
-                window.close()
-                return None
-
-            try:
-                cpf = values['cpf']
-                if len(cpf) != 11 or not cpf.isdigit():
-                    raise CPFInvalidoException()
-                cpf = int(cpf)
-                window.close()
-                return cpf
-            except CPFInvalidoException as e:
-                sg.popup(str(e))
-
     def get_gasto_id(self):
         layout = [
             [sg.Text('ID do gasto a ser deletado:'), sg.InputText(key='id')],

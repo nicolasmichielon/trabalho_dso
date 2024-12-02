@@ -36,7 +36,7 @@ class EstacionamentoController():
 
     def ocupar_vaga(self):
         try:
-            cpf_pessoa = self.__estacionamento_view.get_cpf()
+            cpf_pessoa = self.__master_controller.pessoa_controller.get_cpf()
             pessoa = self.__master_controller.pessoa_controller.busca_morador_por_cpf(cpf_pessoa)
             num_vaga = self.__estacionamento_view.get_vaga()
             tipo_da_pessoa = self.__master_controller.pessoa_controller.get_tipo_de_pessoa(pessoa.cpf)
@@ -66,7 +66,7 @@ class EstacionamentoController():
 
     def desocupar_vaga(self):
         try:
-            cpf_pessoa = self.__estacionamento_view.get_cpf()
+            cpf_pessoa = self.__master_controller.pessoa_controller.get_cpf()
             num_vaga = self.__estacionamento_view.get_vaga()
             for v in self.__vagas:
                 if v.numero == num_vaga and cpf_pessoa == v.pessoa.cpf:
