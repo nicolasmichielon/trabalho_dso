@@ -14,40 +14,37 @@ class OcorrenciaController():
         dados = self.__ocorrencia_view.get_ocorrencia(self.busca_ultimo_id())
         sindico_atual = self.__master_controller.pessoa_controller.get_sindico()
         morador = self.__master_controller.pessoa_controller.busca_morador_por_cpf(dados.get("cpf"))
-        if morador == None:
-            raise MoradorNaoEncontradoException()
-        if sindico_atual == None:
-            raise NenhumSindicoException()
         try:
+            if morador == None:
+                raise MoradorNaoEncontradoException()
+            if sindico_atual == None:
+                raise NenhumSindicoException()
             ocorrencia = Ocorrencia(dados.get("id"), morador, sindico_atual, dados.get("descricao"), dados.get("tipo"))
             for oc in self.__ocorrencias:
                 if oc.id == ocorrencia.id:
                     return
             self.__ocorrencias.append(ocorrencia)
             self.__ocorrencia_view.mostra_linhas([
-                "Ocorrencia Criada com sucesso",
-                "-----------------------------"
+                "Ocorrencia Criada com sucesso"
             ])
         except MoradorNaoEncontradoException as e:
-            self.__ocorrencia_view.mostra_linhas([
-                f"\n{e}\n"
-            ])
+                self.__ocorrencia_view.mostra_linhas([
+                    f"\n{e}\n"
+                ])
         except NenhumSindicoException as e:
-            self.__ocorrencia_view.mostra_linhas([
-                f"\n{e}\n"
-            ])
+                self.__ocorrencia_view.mostra_linhas([
+                    f"\n{e}\n"
+                ])
         except:
-            self.__ocorrencia_view.mostra_linhas([
-                f"\n{e}\n"
-            ])
+                self.__ocorrencia_view.mostra_linhas([
+                    f"\n{e}\n"
+                ])
 
     def remover_ocorrencia(self, ocorrencia):
         if len(self.__ocorrencias) > 0 and ocorrencia in self.__ocorrencias:
             self.__ocorrencias.remove(ocorrencia)
             self.__ocorrencia_view.mostra_ocorrencias([
-                "---------------------------------",
-                f"Ocorrência removida com sucesso!",
-                "---------------------------------",
+                "Ocorrência removida com sucesso!"
                 ])
         else:
             self.__ocorrencia_view.mostra_ocorrencias(["Nenhuma ocorrência encontrada!"])
@@ -60,8 +57,8 @@ class OcorrenciaController():
                     self.__ocorrencia_view.mostra_ocorrencias([
                         "-------------------------------",
                         f"Ocorrência id: {ocorrencia.id}",
-                        f"Morador: {ocorrencia.morador}",
-                        f"Sindico: {ocorrencia.sindico}",
+                        f"Morador: {ocorrencia.morador.nome}",
+                        f"Sindico: {ocorrencia.sindico.nome}",
                         f"Descrição: {ocorrencia.descricao}",
                         f"Resolvida? {"Sim" if ocorrencia.resolvida else "Não"}",
                         "-------------------------------"])

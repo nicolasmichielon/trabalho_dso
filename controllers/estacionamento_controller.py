@@ -97,7 +97,7 @@ class EstacionamentoController():
                     self.__estacionamento_view.mostrar_vagas([
                         "------------------------------------",
                         f"Vaga {v.numero}",
-                        f"Ocupado: {v.ocupado}",
+                        f"Ocupado: {'sim' if v.ocupado else 'não'}",
                         f"Vaga de {v.tipo_de_vaga}",
                         f"Ocupado por {pessoa_to_display}",
                         "-------------------------------------"

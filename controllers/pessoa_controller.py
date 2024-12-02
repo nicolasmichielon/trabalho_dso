@@ -46,7 +46,7 @@ class PessoaController():
                 cpfs.append(v.cpf)
             if morador.cpf not in cpfs:
                 self.__moradores.append(morador)
-                self.__pessoas_view.mostrar_pessoa([morador])
+                self.__pessoas_view.mostrar_pessoa([f"O morador {morador.nome} com o CPF {morador.cpf} foi adicionado com sucesso!"])
             else:
                 raise PessoaRepetidaException(morador.cpf)
         except PessoaRepetidaException as e:
@@ -64,7 +64,7 @@ class PessoaController():
                 cpfs.append(visitante.cpf)
             if visitante.cpf not in cpfs:
                 self.__visitantes.append(visitante)
-                self.__pessoas_view.mostrar_pessoa([visitante])
+                self.__pessoas_view.mostrar_pessoa([f"O visitante {visitante.nome} com o CPF {visitante.cpf} foi adicionado com sucesso!"])
             else:
                 raise PessoaRepetidaException(visitante.cpf)
         except PessoaRepetidaException as e:
@@ -84,7 +84,7 @@ class PessoaController():
             ])
         elif morador in self.__moradores:
             self.__moradores.remove(morador)
-            self.__pessoas_view.mostra_linhas([f"Morador {morador.nome} do CPF {morador.cpf} foi removido com sucesso!"])
+            self.__pessoas_view.mostra_linhas([f"Morador {morador.nome} com o CPF {morador.cpf} foi removido com sucesso!"])
 
     def remover_visitante(self):
         try:
@@ -100,7 +100,7 @@ class PessoaController():
             ])
         if visitante in self.__visitantes:
             self.__visitantes.remove(visitante)
-            self.__pessoas_view.mostrar_pessoa([visitante])
+            self.__pessoas_view.mostrar_pessoa([f"O visitante {visitante.nome} com o CPF {visitante.cpf} foi removido com sucesso!"])
 
     def busca_morador_por_cpf(self, cpf) -> Morador:
         self.__pessoas_view.mostra_linhas([
@@ -117,10 +117,6 @@ class PessoaController():
         ])
         for visitante in self.__visitantes:
             if visitante.cpf == cpf:
-                self.__pessoas_view.mostrar_pessoa([
-                    "-------------------------------",
-                    f"Nome: {visitante.nome}",
-                    "-------------------------------"])
                 return visitante
         return None
             
