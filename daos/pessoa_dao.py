@@ -1,15 +1,15 @@
 from daos.dao import DAO
 from models.morador import Morador
 from models.visitante import Visitante
+from models.sindico import Sindico
 from exceptions.pessoa_repetida_exception import PessoaRepetidaException
 
 class PessoaDAO(DAO):
     def __init__(self):
         super().__init__('pessoas.pkl')
-        self.__sindico = None
 
     def adicionar_pessoa(self, pessoa):
-        if isinstance(pessoa, (Morador, Visitante)):
+        if isinstance(pessoa, (Morador, Visitante, Sindico)):
             if pessoa.cpf not in [p.cpf for p in self.get_all()]:
                 self.add(pessoa.cpf, pessoa)
             else:
@@ -31,9 +31,6 @@ class PessoaDAO(DAO):
 
     def get_visitantes(self):
         return [p for p in self.get_all() if isinstance(p, Visitante)]
-
-    def set_sindico(self, sindico):
-        self.__sindico = sindico
-
+    
     def get_sindico(self):
-        return self.__sindico
+        return [p for p in self.get_all() if isinstance(p, Sindico)][0]

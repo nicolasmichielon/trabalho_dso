@@ -19,12 +19,16 @@ class PessoaController():
     @property
     def moradores(self):
         return self.__pessoa_dao.get_moradores()
+    
+    @property
+    def pessoa_view(self):
+        return self.__pessoas_view
 
     def adicionar_sindico(self):
         try:
             dados = self.__pessoas_view.get_pessoa()
             sindico = Sindico(dados.get("nome"), dados.get("telefone"), dados.get("cpf"), dados.get("idade"))
-            self.__pessoa_dao.set_sindico(sindico)
+            self.__pessoa_dao.adicionar_pessoa(sindico)
         except:
             self.__pessoas_view.mostra_linhas([
                 f"\n{DadosInvalidosException()}\n"
@@ -90,7 +94,7 @@ class PessoaController():
             ])
 
     def trocar_sindico(self, novo_sindico: Sindico):
-        self.__pessoa_dao.set_sindico(novo_sindico)
+        self.__pessoa_dao.adicionar_pessoa(novo_sindico)
         self.__pessoas_view.mostra_linhas([
             f"Sindico trocado com sucesso."
         ])
@@ -138,4 +142,7 @@ class PessoaController():
             self.__pessoas_view.mostra_linhas([
                 f"\n{NenhumVisitanteException()}\n"
             ])
+
+    def get_cpf(self):
+        return self.__pessoas_view.get_cpf()
 
