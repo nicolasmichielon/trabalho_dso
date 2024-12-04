@@ -1,13 +1,17 @@
 from models.estacionamento import Estacionamento
 from views.estacionamento_view import EstacionamentoView
 from exceptions.tipo_vaga_incompativel_exception import TipoVagaIncompativelException
+from daos.estacionamento_dao import EstacionamentoDAO
 
 class EstacionamentoController():
     def __init__(self, master_controller) -> None:
         self.__master_controller = master_controller
-        self.__estacionamento = Estacionamento(11, 3)
-        self.__vagas = self.__estacionamento.vagas
         self.__estacionamento_view = EstacionamentoView()
+
+        self.__estacionamento = Estacionamento(11, 3)
+        # self.__vagas = self.__estacionamento.vagas
+        
+        self.__estacionamento_dao = EstacionamentoDAO()
 
     def display_vagas(self):
         numeros = []
@@ -15,7 +19,7 @@ class EstacionamentoController():
         linhas = []
         linhaNum = ""
         linhaEst = ""
-        for vaga in self.__vagas:
+        for vaga in self.__estacionamento_dao.get_vagas():
             if vaga.numero < 10:
                 linhaNum += f" {vaga.numero} {vaga.tipo_de_vaga[0]}  "
             else:
@@ -40,7 +44,7 @@ class EstacionamentoController():
             pessoa = self.__master_controller.pessoa_controller.busca_morador_por_cpf(cpf_pessoa)
             num_vaga = self.__estacionamento_view.get_vaga()
             tipo_da_pessoa = self.__master_controller.pessoa_controller.get_tipo_de_pessoa(pessoa.cpf)
-            for v in self.__vagas:
+            for v in self.__estacionamento_dao.get_vagas():
                 tv = v.tipo_de_vaga
                 if tv == tipo_da_pessoa:
                     if v.numero == num_vaga:
@@ -68,7 +72,7 @@ class EstacionamentoController():
         try:
             cpf_pessoa = self.__master_controller.pessoa_controller.get_cpf()
             num_vaga = self.__estacionamento_view.get_vaga()
-            for v in self.__vagas:
+            for v in self.__estacionamento_dao.get_vagas():
                 if v.numero == num_vaga and cpf_pessoa == v.pessoa.cpf:
                     if v.ocupado:
                         v.ocupado = False
@@ -88,7 +92,7 @@ class EstacionamentoController():
     def display_vaga(self):
         try:
             num_vaga = self.__estacionamento_view.get_vaga()
-            for v in self.__vagas:
+            for v in self.__estacionamento_dao.get_vagas():
                 if v.numero == num_vaga:
                     if v.ocupado:
                         pessoa_to_display = v.pessoa.nome
