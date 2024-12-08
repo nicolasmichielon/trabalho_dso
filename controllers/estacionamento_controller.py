@@ -12,6 +12,7 @@ class EstacionamentoController():
         # self.__vagas = self.__estacionamento.vagas
         
         self.__estacionamento_dao = EstacionamentoDAO()
+        self.__estacionamento_dao.initialize_vagas(self.__estacionamento)
 
     def display_vagas(self):
         numeros = []

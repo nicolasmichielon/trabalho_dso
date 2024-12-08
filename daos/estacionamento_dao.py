@@ -4,6 +4,9 @@ class EstacionamentoDAO(DAO):
     def __init__(self):
         super().__init__('vagas.pkl')
 
+    def initialize_vagas(self, estacionamento: Estacionamento):
+        self.add("estacionamento", estacionamento)
+
     def adicionar_vaga(self, pessoa):
         if isinstance(pessoa, (Morador, Visitante, Sindico)):
             if pessoa.cpf not in [p.cpf for p in self.get_all()]:
@@ -23,4 +26,4 @@ class EstacionamentoDAO(DAO):
         return None
 
     def get_vagas(self):
-        return self.get_all()
+        return self.get("estacionamento").vagas
