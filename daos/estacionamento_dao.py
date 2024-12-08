@@ -1,4 +1,9 @@
 from daos.dao import DAO
+from exceptions.pessoa_repetida_exception import PessoaRepetidaException
+from models.estacionamento import Estacionamento
+from models.morador import Morador
+from models.sindico import Sindico
+from models.visitante import Visitante
 
 class EstacionamentoDAO(DAO):
     def __init__(self):
