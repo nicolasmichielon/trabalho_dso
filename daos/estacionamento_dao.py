@@ -1,9 +1,5 @@
 from daos.dao import DAO
-from exceptions.pessoa_repetida_exception import PessoaRepetidaException
 from models.estacionamento import Estacionamento
-from models.morador import Morador
-from models.sindico import Sindico
-from models.visitante import Visitante
 
 class EstacionamentoDAO(DAO):
     def __init__(self):
@@ -12,23 +8,21 @@ class EstacionamentoDAO(DAO):
     def initialize_vagas(self, estacionamento: Estacionamento):
         self.add("estacionamento", estacionamento)
 
-    def adicionar_vaga(self, pessoa):
-        if isinstance(pessoa, (Morador, Visitante, Sindico)):
-            if pessoa.cpf not in [p.cpf for p in self.get_all()]:
-                self.add(pessoa.cpf, pessoa)
-            else:
-                raise PessoaRepetidaException(pessoa.cpf)
+    def ocupar_vaga(self, vaga, pessoa):
+        novo_estacionamento = self.get("estacionamento")
+        for v in novo_estacionamento.vagas:
+            if v.numero == vaga.numero:
+                v.ocupado = True
+                v.pessoa = pessoa
+        self.update("estacionamento", novo_estacionamento)
 
-    def remover_pessoa(self, cpf, tipo):
-        pessoa = self.get(cpf)
-        if isinstance(pessoa, tipo):
-            self.remove(cpf)
-
-    def buscar_pessoa_por_cpf(self, cpf, tipo):
-        pessoa = self.get(cpf)
-        if isinstance(pessoa, tipo):
-            return pessoa
-        return None
+    def desocupar_vaga(self, vaga):
+        novo_estacionamento = self.get("estacionamento")
+        for v in novo_estacionamento.vagas:
+            if v.numero == vaga.numero:
+                v.ocupado = False
+                v.pessoa = None
+        self.update("estacionamento", novo_estacionamento)
 
     def get_vagas(self):
         return self.get("estacionamento").vagas

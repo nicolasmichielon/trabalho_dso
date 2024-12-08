@@ -52,8 +52,7 @@ class EstacionamentoController():
                         if v.ocupado:
                             raise ValueError("Esta vaga já está ocupada.")
                         else:
-                            v.ocupado = True
-                            v.pessoa = pessoa
+                            self.__estacionamento_dao.ocupar_vaga(v, pessoa):
                             self.__estacionamento_view.mostra_linhas([
                                 "Vaga ocupada."
                             ])
@@ -76,7 +75,7 @@ class EstacionamentoController():
             for v in self.__estacionamento_dao.get_vagas():
                 if v.numero == num_vaga and cpf_pessoa == v.pessoa.cpf:
                     if v.ocupado:
-                        v.ocupado = False
+                        self.estacionamento_dao.desocupar_vaga(v)
                         self.__estacionamento_view.mostra_linhas([
                             "Vaga desocupada."
                         ])
