@@ -52,7 +52,7 @@ class EstacionamentoController():
                         if v.ocupado:
                             raise ValueError("Esta vaga já está ocupada.")
                         else:
-                            self.__estacionamento_dao.ocupar_vaga(v, pessoa):
+                            self.__estacionamento_dao.ocupar_vaga(v, pessoa)
                             self.__estacionamento_view.mostra_linhas([
                                 "Vaga ocupada."
                             ])
