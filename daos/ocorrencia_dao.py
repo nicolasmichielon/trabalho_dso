@@ -2,8 +2,8 @@ from daos.dao import DAO
 from models.ocorrencia import Ocorrencia
 
 class OcorrenciaDAO(DAO):
-    def _init_(self):
-        super()._init_('ocorrencias.pkl')
+    def __init__(self):
+        super().__init__('ocorrencias.pkl')
 
     def adicionar_ocorrencia(self, ocorrencia):
         if isinstance(ocorrencia, Ocorrencia):
@@ -22,4 +22,4 @@ class OcorrenciaDAO(DAO):
         return None
 
     def get_all_ocorrencias(self):
-        return [o for o in self.get_all() if isinstance(o, Ocorrencia)]
+        return [o for o in self.get_all() if isinstance(o, Ocorrencia)]

@@ -6,7 +6,7 @@ from exceptions.nenhum_sindico_exception import NenhumSindicoException
 from daos.ocorrencia_dao import OcorrenciaDAO
 
 class OcorrenciaController():
-    def _init_(self, master_controller):
+    def __init__(self, master_controller):
         self.__master_controller = master_controller
         self.__ocorrencia_view = OcorrenciaView()
         self.__ocorrencia_dao = OcorrenciaDAO()
