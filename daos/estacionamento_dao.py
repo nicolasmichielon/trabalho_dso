@@ -6,7 +6,8 @@ class EstacionamentoDAO(DAO):
         super().__init__('vagas.pkl')
 
     def initialize_vagas(self, estacionamento: Estacionamento):
-        self.add("estacionamento", estacionamento)
+        if self.get("estacionamento") == None:
+            self.add("estacionamento", estacionamento)
 
     def ocupar_vaga(self, vaga, pessoa):
         novo_estacionamento = self.get("estacionamento")
