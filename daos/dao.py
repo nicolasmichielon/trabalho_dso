@@ -29,6 +29,7 @@ class DAO(ABC):
                 self.__cache[key] = obj #atualiza a entrada
                 self.__dump()  #atualiza o arquivo
         except KeyError:
+            print("nick")
             pass  # implementar aqui o tratamento da exceção
 
     def get(self, key):
