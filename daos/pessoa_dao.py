@@ -33,4 +33,8 @@ class PessoaDAO(DAO):
         return [p for p in self.get_all() if isinstance(p, Visitante)]
     
     def get_sindico(self):
-        return [p for p in self.get_all() if isinstance(p, Sindico)][0]
+        try:
+            sindico = [p for p in self.get_all() if isinstance(p, Sindico)][0]
+        except:
+            sindico = None
+        return sindico

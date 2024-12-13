@@ -44,8 +44,11 @@ class PessoaView():
                 if len(cpf) != 11 or not cpf.isdigit():
                     raise CPFInvalidoException()
                 cpf = int(cpf)
-                
-                idade = int(values['idade'])
+
+                idade = values['idade']
+                if not idade.isdigit():
+                    raise IdadeInvalidaException()
+                idade = int(idade)
                 if idade > 130 or idade < 0:
                     raise IdadeInvalidaException()
                 
