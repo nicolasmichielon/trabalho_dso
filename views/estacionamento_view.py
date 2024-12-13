@@ -20,7 +20,7 @@ class EstacionamentoView():
         window.close()
         return None
 
-    def get_vaga(self) -> int:
+    def get_vaga(self):
         layout = [
             [sg.Text('Vaga:'), sg.InputText(key='vaga')],
             [sg.Button('Enviar')]

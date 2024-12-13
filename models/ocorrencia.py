@@ -1,4 +1,3 @@
-from models.tipo_ocorrencia import TipoDeOcorrencia
 from models.morador import Morador
 from models.sindico import Sindico
 
