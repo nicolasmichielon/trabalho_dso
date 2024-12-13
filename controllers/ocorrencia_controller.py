@@ -99,3 +99,22 @@ class OcorrenciaController():
             return ocorrencias[-1].id
         else: 
             return 0
+
+    def marcar_ocorrencia_como_resolvida(self):
+        try:
+            ocorrencia_id = self.__ocorrencia_view.get_ocorrencia_id()
+            ocorrencia = self.__ocorrencia_dao.buscar_ocorrencia_por_id(ocorrencia_id)
+            if ocorrencia is not None:
+                ocorrencia.resolvida = True
+                self.__ocorrencia_dao.update(ocorrencia.id, ocorrencia)
+                self.__ocorrencia_view.mostra_linhas([
+                    "Ocorrência marcada como resolvida com sucesso!"
+                ])
+            else:
+                self.__ocorrencia_view.mostra_linhas([
+                    "Ocorrência não encontrada!"
+                ])
+        except Exception as e:
+            self.__ocorrencia_view.mostra_linhas([
+                f"Erro ao marcar ocorrência como resolvida: {e}"
+            ])

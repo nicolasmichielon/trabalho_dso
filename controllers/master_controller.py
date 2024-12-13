@@ -131,6 +131,7 @@ class MasterController():
             "1: Criar Ocorrencia",
             "2: Buscar Ocorrencia por CPF de morador",
             "3: Visualizar todas as ocorrências",
+            "4: Marcar Ocorrência como Resolvida"
         ])
         try:
             entrada = self.__master_view.solicitar_resposta()
@@ -146,6 +147,8 @@ class MasterController():
             self.__ocorrencia_controller.busca_ocorrencias_por_cpf_de_morador()
         elif entrada == "3: Visualizar todas as ocorrências":
             self.__ocorrencia_controller.busca_ocorrencias()
+        elif entrada == "4: Marcar Ocorrência como Resolvida":
+            self.__ocorrencia_controller.marcar_ocorrencia_como_resolvida()
         else:
             self.__master_view.stop()
             return True

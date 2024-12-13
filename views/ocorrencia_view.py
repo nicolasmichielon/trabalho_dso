@@ -59,3 +59,19 @@ class OcorrenciaView():
                 sg.popup(e)
             except:
                 sg.popup(DadosInvalidosException())
+
+    def get_ocorrencia_id(self):
+        while True:
+            layout = [[sg.Text('ID da Ocorrência:'), sg.InputText(key='id')],
+                      [sg.Button('Enviar')]]
+            window = sg.Window('ID da Ocorrência', layout)
+            event, values = window.read()
+            window.close()
+            ocorrencia_id = values['id']
+            try:
+                if not ocorrencia_id.isdigit():
+                    raise DadosInvalidosException("ID inválido. Deve ser um número.")
+                ocorrencia_id = int(ocorrencia_id)
+                return ocorrencia_id
+            except DadosInvalidosException as e:
+                sg.popup(e)
