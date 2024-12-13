@@ -1,9 +1,4 @@
-from models.pessoa import Pessoa
-
-class Morador(Pessoa):
+class Morador():
     def __init__(self, nome: str, telefone: int, cpf: int, idade: int):
         super().__init__(nome, telefone, cpf, idade)
         self.__gastos = []
-
-    def apresentar(self):
-        pass

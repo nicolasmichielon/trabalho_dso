@@ -1,6 +1,4 @@
-from abc import ABC, abstractmethod
-
-class Pessoa(ABC):
+class Pessoa():
     def __init__(self, nome: str, telefone: str, cpf: str, idade: int):
         if not nome or not isinstance(nome, str):
             raise ValueError("O atributo 'nome' deve ser uma string válida.")
@@ -15,10 +13,6 @@ class Pessoa(ABC):
         self.telefone = telefone
         self.cpf = cpf
         self.idade = idade
-
-    @abstractmethod
-    def apresentar(self):
-        pass
 
     @property
     def nome(self):
