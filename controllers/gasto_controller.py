@@ -20,7 +20,7 @@ class GastoController():
             if morador == None:
                 raise MoradorNaoEncontradoException()
             id = self.__gasto_dao.get_next_id()
-            gasto = Gasto(id, dados.get("valor"), morador, False, dados.get("tipo"))
+            gasto = Gasto(id, dados.get("valor"), morador, False, dados.get("descricao"))
             self.__gasto_dao.adicionar_gasto(gasto)
         except MoradorNaoEncontradoException as e:
             self.__gastos_view.mostra_linhas([
@@ -156,7 +156,7 @@ class GastoController():
             else:
                 gasto = self.__gasto_dao.buscar_gasto_por_id(gasto_id)
                 gasto.pago = True
-                self.__gasto_dao.adicionar_gasto(gasto)
+                self.__gasto_dao.pagar_gasto(gasto)
                 self.__gastos_view.gasto_pago()
         except IDInvalidoException as e:
             self.__gastos_view.mostra_linhas([

@@ -30,3 +30,6 @@ class GastoDAO(DAO):
             return 1
         else:
             return max(gasto.id for gasto in gastos) + 1
+        
+    def pagar_gasto(self, gasto):
+        self.update(gasto.id, gasto)
