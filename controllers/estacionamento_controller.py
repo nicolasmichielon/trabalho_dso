@@ -27,9 +27,9 @@ class EstacionamentoController():
                 linhaNum += f"{vaga.numero} {vaga.tipo_de_vaga[0]}  "
 
             if vaga.ocupado:
-                linhaEst += f"  O   "
+                linhaEst += f"  O      "
             else:
-                linhaEst += f"  -   "
+                linhaEst += f"  -      "
 
             if vaga.numero % 3 == 0:
                 linhas.append(linhaNum)
